@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Package } from 'lucide-react';
+import { Package, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { BaseCrudService, useCart, useCurrency, formatPrice, DEFAULT_CURRENCY } from '@/integrations';
+import { BaseCrudService } from '@/integrations';
 import { Products } from '@/entities';
-import Cart from '@/components/Cart';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Products[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const { addingItemId, actions } = useCart();
-  const { currency } = useCurrency();
 
   useEffect(() => {
     loadProducts();
@@ -146,70 +144,54 @@ export default function ProductsPage() {
                   whileHover={{ y: -10 }}
                   className="group"
                 >
-                  <div className="relative bg-background/50 backdrop-blur-lg border border-foreground/10 rounded-2xl overflow-hidden h-full transition-all duration-300 hover:border-highlight/50 hover:shadow-xl hover:shadow-highlight/20">
-                    {product.itemImage && (
-                      <div className="relative h-64 overflow-hidden">
-                        <Image
-                          src={product.itemImage}
-                          alt={product.itemName || 'Product'}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          width={500}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-                      </div>
-                    )}
-                    
-                    <div className="p-6">
-                      {product.category && (
-                        <span className="inline-block px-3 py-1 bg-highlight/20 text-highlight text-sm font-semibold rounded-full mb-4">
-                          {product.category}
-                        </span>
-                      )}
-                      
-                      <h3 className="font-heading text-xl font-bold uppercase mb-3 text-foreground">
-                        {product.itemName}
-                      </h3>
-                      
-                      <p className="font-paragraph text-foreground/80 leading-relaxed mb-4 line-clamp-3">
-                        {product.itemDescription}
-                      </p>
-
-                      {product.features && (
-                        <p className="font-paragraph text-sm text-foreground/60 mb-4">
-                          {product.features}
-                        </p>
-                      )}
-                      
-                      <div className="flex items-center justify-between mt-6 pt-6 border-t border-foreground/10">
-                        <div>
-                          <p className="font-heading text-2xl font-bold text-highlight">
-                            {formatPrice(product.itemPrice || 0, currency ?? DEFAULT_CURRENCY)}
-                          </p>
+                  <Link to={`/product/${product._id}`} className="block h-full">
+                    <div className="relative bg-background/50 backdrop-blur-lg border border-foreground/10 rounded-2xl overflow-hidden h-full transition-all duration-300 hover:border-highlight/50 hover:shadow-xl hover:shadow-highlight/20 cursor-pointer">
+                      {product.itemImage && (
+                        <div className="relative h-64 overflow-hidden">
+                          <Image
+                            src={product.itemImage}
+                            alt={product.itemName || 'Product'}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            width={500}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
                         </div>
+                      )}
+                      
+                      <div className="p-6 flex flex-col h-full">
+                        {product.category && (
+                          <span className="inline-block px-3 py-1 bg-highlight/20 text-highlight text-sm font-semibold rounded-full mb-4 w-fit">
+                            {product.category}
+                          </span>
+                        )}
                         
-                        <button
-                          onClick={() => actions.addToCart({ 
-                            collectionId: 'products', 
-                            itemId: product._id 
-                          })}
-                          disabled={addingItemId === product._id}
-                          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent to-highlight text-primary-foreground font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-accent/50 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {addingItemId === product._id ? (
-                            <>
-                              <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                              Adding...
-                            </>
-                          ) : (
-                            <>
-                              <ShoppingCart className="w-4 h-4" />
-                              Add to Cart
-                            </>
-                          )}
-                        </button>
+                        <h3 className="font-heading text-xl font-bold uppercase mb-3 text-foreground">
+                          {product.itemName}
+                        </h3>
+                        
+                        <p className="font-paragraph text-foreground/80 leading-relaxed mb-4 line-clamp-3 flex-grow">
+                          {product.itemDescription}
+                        </p>
+
+                        {product.features && (
+                          <p className="font-paragraph text-sm text-foreground/60 mb-6">
+                            {product.features}
+                          </p>
+                        )}
+                        
+                        <div className="flex items-center justify-between mt-auto pt-6 border-t border-foreground/10">
+                          <div>
+                            <p className="font-heading text-sm text-foreground/60 mb-1">Starting at</p>
+                          </div>
+                          
+                          <div className="flex items-center gap-3 text-accent hover:text-highlight transition-colors">
+                            <span className="font-heading text-lg font-bold">View Details</span>
+                            <ArrowRight className="w-5 h-5" />
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </motion.div>
               ))}
             </motion.div>

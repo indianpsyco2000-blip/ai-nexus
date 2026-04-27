@@ -5,6 +5,7 @@ import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
 import HomePage from '@/components/pages/HomePage';
 import ServicesPage from '@/components/pages/ServicesPage';
 import ProductsPage from '@/components/pages/ProductsPage';
+import ProductDetailPage from '@/components/pages/ProductDetailPage';
 import CaseStudiesPage from '@/components/pages/CaseStudiesPage';
 import IndustriesPage from '@/components/pages/IndustriesPage';
 import ResourcesPage from '@/components/pages/ResourcesPage';
@@ -46,6 +47,13 @@ const router = createBrowserRouter([
         element: <ProductsPage />,
         routeMetadata: {
           pageIdentifier: 'products',
+        },
+      },
+      {
+        path: "product/:id",
+        element: <ProductDetailPage />,
+        routeMetadata: {
+          pageIdentifier: 'product-detail',
         },
       },
       {
