@@ -23,7 +23,7 @@ export default function Header() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-lg border-b border-foreground/10">
+    <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-lg border-b border-highlight/20">
       <div className="max-w-[100rem] mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -74,7 +74,7 @@ export default function Header() {
             
             <Link
               to="/contact"
-              className="px-6 py-3 bg-gradient-to-r from-accent to-[#8A2BE2] text-primary-foreground font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-accent/50 hover:scale-105"
+              className="px-6 py-3 bg-gradient-to-r from-highlight to-accent text-primary-foreground font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-highlight/50 hover:scale-105"
             >
               Get Started
             </Link>
@@ -126,7 +126,7 @@ export default function Header() {
                 <Link
                   to="/contact"
                   onClick={() => setIsMenuOpen(false)}
-                  className="block w-full text-center px-6 py-3 bg-gradient-to-r from-accent to-[#8A2BE2] text-primary-foreground font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-accent/50"
+                  className="block w-full text-center px-6 py-3 bg-gradient-to-r from-highlight to-accent text-primary-foreground font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-highlight/50"
                 >
                   Get Started
                 </Link>

@@ -67,21 +67,31 @@ export default function HomePage() {
         .tech-grid {
           background-size: 50px 50px;
           background-image: 
-            linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            linear-gradient(to right, rgba(50, 224, 196, 0.08) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(50, 224, 196, 0.08) 1px, transparent 1px);
           mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
         }
         .glow-text {
-          text-shadow: 0 0 20px rgba(50, 224, 196, 0.5);
+          text-shadow: 0 0 30px rgba(50, 224, 196, 0.8), 0 0 60px rgba(28, 130, 227, 0.4);
         }
         .glass-panel {
-          background: rgba(11, 19, 43, 0.6);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          background: rgba(11, 19, 43, 0.7);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(50, 224, 196, 0.2);
+        }
+        .glass-panel:hover {
+          border-color: rgba(50, 224, 196, 0.5);
+          background: rgba(11, 19, 43, 0.8);
         }
         .clip-diagonal {
           clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+        }
+        .neon-glow {
+          box-shadow: 0 0 20px rgba(50, 224, 196, 0.5), inset 0 0 20px rgba(50, 224, 196, 0.1);
+        }
+        .neon-glow:hover {
+          box-shadow: 0 0 40px rgba(50, 224, 196, 0.8), inset 0 0 20px rgba(50, 224, 196, 0.2);
         }
       `}</style>
 
@@ -92,14 +102,19 @@ export default function HomePage() {
         {/* Animated Background Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <motion.div
-            className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-accent/10 rounded-full blur-[120px]"
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3], x: [0, 50, 0] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-accent/20 rounded-full blur-[150px]"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4], x: [0, 80, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bottom-1/4 right-1/4 w-[30vw] h-[30vw] bg-highlight/10 rounded-full blur-[100px]"
-            animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.2, 0.4], y: [0, -50, 0] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] bg-highlight/25 rounded-full blur-[140px]"
+            animate={{ scale: [1.2, 0.9, 1.2], opacity: [0.5, 0.3, 0.5], y: [0, -80, 0], x: [0, 60, 0] }}
+            transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-1/2 right-1/3 w-[25vw] h-[25vw] bg-accent/15 rounded-full blur-[120px]"
+            animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.3, 0.6, 0.3], x: [0, -100, 0] }}
+            transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           />
         </div>
 
@@ -115,29 +130,35 @@ export default function HomePage() {
             className="relative w-48 h-48 md:w-64 md:h-64 mb-12 flex items-center justify-center"
           >
             <motion.div
-              className="absolute inset-0 border border-accent/30 rounded-full"
+              className="absolute inset-0 border border-highlight/40 rounded-full"
               animate={{ rotate: 360 }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute inset-4 border border-accent/30 rounded-full border-dashed"
+              animate={{ rotate: -360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             />
             <motion.div
-              className="absolute inset-4 border border-highlight/20 rounded-full border-dashed"
-              animate={{ rotate: -360 }}
+              className="absolute inset-8 border border-highlight/20 rounded-full"
+              animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             />
-            <div className="absolute inset-0 bg-accent/5 rounded-full blur-xl animate-pulse" />
-            <Brain className="w-20 h-20 md:w-28 md:h-28 text-highlight relative z-10 drop-shadow-[0_0_15px_rgba(50,224,196,0.8)]" strokeWidth={1} />
+            <div className="absolute inset-0 bg-gradient-to-br from-highlight/10 to-accent/5 rounded-full blur-2xl animate-pulse" />
+            <Brain className="w-20 h-20 md:w-28 md:h-28 text-highlight relative z-10 drop-shadow-[0_0_25px_rgba(50,224,196,1)]" strokeWidth={1} />
             
             {/* Floating Data Nodes */}
-            {[...Array(3)].map((_, i) => (
+            {[...Array(4)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-2 h-2 bg-highlight rounded-full shadow-[0_0_10px_#32E0C4]"
+                className="absolute w-3 h-3 bg-highlight rounded-full shadow-[0_0_15px_#32E0C4] neon-glow"
                 animate={{
-                  x: [Math.cos(i * 120) * 80, Math.cos(i * 120) * 100, Math.cos(i * 120) * 80],
-                  y: [Math.sin(i * 120) * 80, Math.sin(i * 120) * 100, Math.sin(i * 120) * 80],
-                  opacity: [0.5, 1, 0.5]
+                  x: [Math.cos(i * 90) * 100, Math.cos(i * 90) * 130, Math.cos(i * 90) * 100],
+                  y: [Math.sin(i * 90) * 100, Math.sin(i * 90) * 130, Math.sin(i * 90) * 100],
+                  opacity: [0.6, 1, 0.6],
+                  scale: [1, 1.3, 1]
                 }}
-                transition={{ duration: 3 + i, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 4 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
               />
             ))}
           </motion.div>
@@ -146,10 +167,10 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent/30 bg-accent/10 backdrop-blur-md mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-highlight/50 bg-highlight/10 backdrop-blur-md mb-8 neon-glow"
           >
             <Activity className="w-4 h-4 text-highlight animate-pulse" />
-            <span className="text-xs font-mono tracking-widest text-highlight uppercase">System Online // V.2.0</span>
+            <span className="text-xs font-mono tracking-widest text-highlight uppercase font-bold">System Online // V.2.0</span>
           </motion.div>
 
           <motion.h1
@@ -244,18 +265,18 @@ export default function HomePage() {
                 <motion.div
                   key={idx}
                   variants={itemVariants}
-                  className="group relative glass-panel p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-accent/30"
+                  className="group relative glass-panel p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-highlight/50 neon-glow"
                 >
-                  <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+                  <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-highlight/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
                   
-                  <div className="w-14 h-14 rounded-lg bg-accent/10 flex items-center justify-center mb-6 border border-accent/20 group-hover:border-highlight/50 group-hover:bg-highlight/10 transition-colors duration-500">
-                    <item.icon className="w-6 h-6 text-accent group-hover:text-highlight transition-colors duration-500" />
+                  <div className="w-14 h-14 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-colors duration-500 neon-glow">
+                    <item.icon className="w-6 h-6 text-highlight group-hover:text-highlight transition-colors duration-500" />
                   </div>
                   
                   <h3 className="font-heading text-xl font-bold uppercase mb-3 tracking-wide">{item.title}</h3>
                   <p className="text-foreground/60 text-sm leading-relaxed font-light">{item.desc}</p>
                   
-                  <div className="mt-6 flex items-center gap-2 text-xs font-mono text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="mt-6 flex items-center gap-2 text-xs font-mono text-highlight opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <span>Initialize</span>
                     <ArrowRight className="w-3 h-3" />
                   </div>

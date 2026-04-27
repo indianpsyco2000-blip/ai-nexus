@@ -44,7 +44,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full bg-background border-t border-foreground/10">
+    <footer className="w-full bg-background border-t border-highlight/20">
       <div className="max-w-[100rem] mx-auto px-6 py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-12">
@@ -174,7 +174,7 @@ export default function Footer() {
         </div>
 
         {/* Social Links & Bottom Bar */}
-        <div className="pt-8 border-t border-foreground/10">
+        <div className="pt-8 border-t border-highlight/20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             {/* Social Links */}
             <div className="flex items-center gap-4">
