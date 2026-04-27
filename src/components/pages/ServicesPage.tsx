@@ -233,45 +233,42 @@ export default function ServicesPage() {
                   whileHover={{ y: -10 }}
                   className="group"
                 >
-                  <div className="relative bg-background/50 backdrop-blur-lg border border-foreground/10 rounded-2xl overflow-hidden h-full transition-all duration-300 hover:border-accent/50 hover:shadow-xl hover:shadow-accent/20">
-                    {service.serviceImage && (
-                      <div className="relative h-56 overflow-hidden">
-                        <Image
-                          src={service.serviceImage}
-                          alt={service.serviceName || 'Service'}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          width={500}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-                      </div>
-                    )}
-                    
-                    <div className="p-6">
-                      {service.category && (
-                        <span className="inline-block px-3 py-1 bg-accent/20 text-accent text-sm font-semibold rounded-full mb-4">
-                          {service.category}
-                        </span>
+                  <Link to={`/service/${service._id}`} className="block h-full">
+                    <div className="relative bg-background/50 backdrop-blur-lg border border-foreground/10 rounded-2xl overflow-hidden h-full transition-all duration-300 hover:border-accent/50 hover:shadow-xl hover:shadow-accent/20">
+                      {service.serviceImage && (
+                        <div className="relative h-56 overflow-hidden">
+                          <Image
+                            src={service.serviceImage}
+                            alt={service.serviceName || 'Service'}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            width={500}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+                        </div>
                       )}
                       
-                      <h3 className="font-heading text-xl font-bold uppercase mb-3 text-foreground">
-                        {service.serviceName}
-                      </h3>
-                      
-                      <p className="font-paragraph text-foreground/80 leading-relaxed mb-4">
-                        {service.description}
-                      </p>
-                      
-                      {service.callToActionUrl && (
-                        <a
-                          href={service.callToActionUrl}
-                          className="inline-flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all"
-                        >
+                      <div className="p-6">
+                        {service.category && (
+                          <span className="inline-block px-3 py-1 bg-accent/20 text-accent text-sm font-semibold rounded-full mb-4">
+                            {service.category}
+                          </span>
+                        )}
+                        
+                        <h3 className="font-heading text-xl font-bold uppercase mb-3 text-foreground">
+                          {service.serviceName}
+                        </h3>
+                        
+                        <p className="font-paragraph text-foreground/80 leading-relaxed mb-4">
+                          {service.description}
+                        </p>
+                        
+                        <div className="inline-flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all">
                           Learn More
                           <ArrowRight className="w-4 h-4" />
-                        </a>
-                      )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </motion.div>
               ))}
             </motion.div>
