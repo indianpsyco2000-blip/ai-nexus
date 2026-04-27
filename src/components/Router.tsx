@@ -9,6 +9,7 @@ import ProductsPage from '@/components/pages/ProductsPage';
 import ProductDetailPage from '@/components/pages/ProductDetailPage';
 import CaseStudiesPage from '@/components/pages/CaseStudiesPage';
 import IndustriesPage from '@/components/pages/IndustriesPage';
+import IndustryDetailPage from '@/components/pages/IndustryDetailPage';
 import ResourcesPage from '@/components/pages/ResourcesPage';
 import PricingPage from '@/components/pages/PricingPage';
 import ContactPage from '@/components/pages/ContactPage';
@@ -76,6 +77,13 @@ const router = createBrowserRouter([
         element: <IndustriesPage />,
         routeMetadata: {
           pageIdentifier: 'industries',
+        },
+      },
+      {
+        path: "industry/:id",
+        element: <IndustryDetailPage />,
+        routeMetadata: {
+          pageIdentifier: 'industry-detail',
         },
       },
       {

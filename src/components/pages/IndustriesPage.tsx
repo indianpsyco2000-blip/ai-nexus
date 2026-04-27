@@ -154,10 +154,13 @@ export default function IndustriesPage() {
                         </div>
                       )}
 
-                      <div className="flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all">
+                      <Link
+                        to={`/industry/${industry._id}`}
+                        className="inline-flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all hover:text-highlight"
+                      >
                         <span>Learn More</span>
                         <ArrowRight className="w-5 h-5" />
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 </motion.div>
