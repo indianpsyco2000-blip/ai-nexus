@@ -32,9 +32,7 @@ export default function Header() {
               <Brain className="w-10 h-10 text-accent transition-transform duration-300 group-hover:scale-110" />
               <div className="absolute inset-0 bg-accent/30 rounded-full blur-lg group-hover:blur-xl transition-all duration-300" />
             </div>
-            <span className="font-heading text-xl font-bold uppercase text-foreground">
-              AI Nexus
-            </span>
+            <span className="font-heading text-xl font-bold uppercase text-foreground">ZapShere</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -135,7 +133,6 @@ export default function Header() {
           )}
         </AnimatePresence>
       </div>
-
       {/* Cart Component */}
       <Cart />
     </header>
