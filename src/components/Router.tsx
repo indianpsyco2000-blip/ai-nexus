@@ -2,6 +2,14 @@ import { MemberProvider } from '@/integrations';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
 import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
+import HomePage from '@/components/pages/HomePage';
+import ServicesPage from '@/components/pages/ServicesPage';
+import ProductsPage from '@/components/pages/ProductsPage';
+import CaseStudiesPage from '@/components/pages/CaseStudiesPage';
+import IndustriesPage from '@/components/pages/IndustriesPage';
+import ResourcesPage from '@/components/pages/ResourcesPage';
+import PricingPage from '@/components/pages/PricingPage';
+import ContactPage from '@/components/pages/ContactPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -21,9 +29,58 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>Wix Vibe</div>,
+        element: <HomePage />,
         routeMetadata: {
           pageIdentifier: 'home',
+        },
+      },
+      {
+        path: "services",
+        element: <ServicesPage />,
+        routeMetadata: {
+          pageIdentifier: 'services',
+        },
+      },
+      {
+        path: "products",
+        element: <ProductsPage />,
+        routeMetadata: {
+          pageIdentifier: 'products',
+        },
+      },
+      {
+        path: "case-studies",
+        element: <CaseStudiesPage />,
+        routeMetadata: {
+          pageIdentifier: 'case-studies',
+        },
+      },
+      {
+        path: "industries",
+        element: <IndustriesPage />,
+        routeMetadata: {
+          pageIdentifier: 'industries',
+        },
+      },
+      {
+        path: "resources",
+        element: <ResourcesPage />,
+        routeMetadata: {
+          pageIdentifier: 'resources',
+        },
+      },
+      {
+        path: "pricing",
+        element: <PricingPage />,
+        routeMetadata: {
+          pageIdentifier: 'pricing',
+        },
+      },
+      {
+        path: "contact",
+        element: <ContactPage />,
+        routeMetadata: {
+          pageIdentifier: 'contact',
         },
       },
       {
