@@ -11,51 +11,33 @@ export default function Header() {
   const location = useLocation();
 
   const navLinks = [
-    { name: 'PROJECTS', path: '/case-studies' },
-    { name: 'BLOG', path: '/resources' },
-    { name: 'ABOUT', path: '/services' },
-    { name: 'RESUME', path: '/pricing' },
+    { name: 'Services', path: '/services' },
+    { name: 'Products', path: '/products' },
+    { name: 'Case Studies', path: '/case-studies' },
+    { name: 'Pricing', path: '/pricing' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-50 w-full">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-        
-        .header-nav-link {
-          font-family: 'Inter', sans-serif;
-          font-size: 16px;
-          font-weight: 600;
-          letter-spacing: 0.05em;
-          transition: color 0.3s ease;
-        }
-        
-        .header-nav-link:hover {
-          color: #5ed29c;
-        }
-        
-        .header-nav-link.active {
-          color: #5ed29c;
-        }
-      `}</style>
-      
-      <div className="max-w-[120rem] mx-auto px-6 py-6">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-white/5">
+      <div className="max-w-[120rem] mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo - Minimalist White */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <span className="font-sans text-2xl font-bold text-white tracking-tight">CodeNest</span>
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <span className="font-heading text-2xl font-bold text-foreground">CodeNest</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-12">
+          <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`header-nav-link text-white ${
-                  isActive(link.path) ? 'active' : ''
+                className={`font-paragraph text-sm font-medium transition-colors duration-300 ${
+                  isActive(link.path)
+                    ? 'text-highlight'
+                    : 'text-foreground/70 hover:text-foreground'
                 }`}
               >
                 {link.name}
@@ -63,16 +45,16 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Cart & CTA Button */}
-          <div className="hidden lg:flex items-center gap-6">
+          {/* Right Actions */}
+          <div className="hidden lg:flex items-center gap-4">
             <button
               onClick={actions.toggleCart}
-              className="relative p-2 text-white hover:text-[#5ed29c] transition-colors"
+              className="relative p-2 text-foreground hover:text-highlight transition-colors"
               aria-label="Shopping cart"
             >
-              <ShoppingCart className="w-6 h-6" />
+              <ShoppingCart className="w-5 h-5" />
               {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#5ed29c] text-[#070b0a] text-xs font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-highlight text-primary text-xs font-bold rounded-full flex items-center justify-center">
                   {itemCount}
                 </span>
               )}
@@ -80,16 +62,16 @@ export default function Header() {
             
             <Link
               to="/contact"
-              className="px-6 py-3 bg-[#5ed29c] text-[#070b0a] font-sans font-bold uppercase tracking-wider text-sm rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#5ed29c]/50 hover:scale-105"
+              className="px-5 py-2 bg-highlight text-primary font-paragraph font-semibold text-sm rounded-lg transition-all hover:opacity-90"
             >
-              Get Started
+              Contact
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-white hover:text-[#5ed29c] transition-colors"
+            className="lg:hidden p-2 text-foreground hover:text-highlight transition-colors"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -104,38 +86,42 @@ export default function Header() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden overflow-hidden mt-6"
+              className="lg:hidden overflow-hidden mt-4"
             >
-              <div className="py-6 space-y-4 bg-background/95 backdrop-blur-lg rounded-lg border border-white/10 p-6">
+              <div className="py-4 space-y-3 border-t border-white/5">
                 {navLinks.map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`block font-sans font-semibold py-3 text-white transition-colors duration-300 ${
-                      isActive(link.path) ? 'text-[#5ed29c]' : 'hover:text-[#5ed29c]'
+                    className={`block font-paragraph text-sm py-2 transition-colors duration-300 ${
+                      isActive(link.path)
+                        ? 'text-highlight'
+                        : 'text-foreground/70 hover:text-foreground'
                     }`}
                   >
                     {link.name}
                   </Link>
                 ))}
-                <button
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    actions.toggleCart();
-                  }}
-                  className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-transparent border-2 border-[#5ed29c] text-[#5ed29c] font-semibold rounded-full transition-all duration-300 hover:bg-[#5ed29c]/10 mt-4"
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                  Cart ({itemCount})
-                </button>
-                <Link
-                  to="/contact"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block w-full text-center px-6 py-3 bg-[#5ed29c] text-[#070b0a] font-sans font-bold uppercase tracking-wider rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#5ed29c]/50 mt-4"
-                >
-                  Get Started
-                </Link>
+                <div className="pt-3 border-t border-white/5 space-y-2">
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      actions.toggleCart();
+                    }}
+                    className="flex items-center justify-center gap-2 w-full px-4 py-2 border border-highlight/30 text-highlight font-paragraph text-sm rounded-lg transition-colors hover:bg-highlight/10"
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                    Cart ({itemCount})
+                  </button>
+                  <Link
+                    to="/contact"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-center px-4 py-2 bg-highlight text-primary font-paragraph font-semibold text-sm rounded-lg transition-all hover:opacity-90"
+                  >
+                    Contact
+                  </Link>
+                </div>
               </div>
             </motion.nav>
           )}

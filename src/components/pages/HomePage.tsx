@@ -174,7 +174,7 @@ export default function HomePage() {
       `}</style>
 
       {/* HERO SECTION - CodeNest */}
-      <section className="relative w-full min-h-[100vh] flex items-center justify-center overflow-hidden pt-20 bg-background">
+      <section className="relative w-full min-h-[100vh] flex items-center justify-center overflow-hidden pt-32 bg-background">
         {/* Background Video */}
         <video
           ref={videoRef}
