@@ -86,7 +86,6 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-accent/30 selection:text-highlight overflow-clip font-paragraph">
       <Header />
-
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@700&family=Instrument+Serif:ital@1&display=swap');
 
@@ -172,7 +171,6 @@ export default function HomePage() {
           pointer-events: none;
         }
       `}</style>
-
       {/* HERO SECTION - CodeNest */}
       <section className="relative w-full min-h-[100vh] flex items-center justify-center overflow-hidden pt-32 bg-background">
         {/* Background Video */}
@@ -208,20 +206,6 @@ export default function HomePage() {
           className="relative z-10 w-full max-w-[120rem] mx-auto px-6 flex flex-col items-center text-center"
         >
           {/* Liquid Glass Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="liquid-glass-card w-48 md:w-56 p-6 mb-12 transform -translate-y-[50px]"
-          >
-            <div className="text-center space-y-3">
-              <div className="text-sm font-mono text-highlight tracking-widest">[ 2025 ]</div>
-              <h3 className="text-lg md:text-xl font-bold text-foreground">
-                Taught by <span className="italic font-serif text-highlight">Industry</span> Professionals
-              </h3>
-              <p className="text-xs text-foreground/70">Master in-demand coding skills from experts</p>
-            </div>
-          </motion.div>
 
           {/* Eyebrow */}
           <motion.div
@@ -230,11 +214,8 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="mb-6"
           >
-            <span className="font-sans font-bold text-xs md:text-sm tracking-widest text-[#5ed29c] uppercase">
-              Career-Ready Curriculum
-            </span>
+            <span className="font-sans font-bold text-xs md:text-sm tracking-widest text-[#5ed29c] uppercase">AI - Automation services</span>
           </motion.div>
-
           {/* Main Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
@@ -244,7 +225,6 @@ export default function HomePage() {
           >
             LAUNCH YOUR CODING CAREER<span className="text-[#5ed29c]">.</span>
           </motion.h1>
-
           {/* Description */}
           <motion.p
             initial={{ opacity: 0 }}
@@ -254,7 +234,6 @@ export default function HomePage() {
           >
             Master in-demand coding skills with hands-on projects, real-world mentorship, and a curriculum designed for today's tech industry.
           </motion.p>
-
           {/* CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -269,7 +248,6 @@ export default function HomePage() {
               <ArrowRight className="w-5 h-5" />
             </Link>
           </motion.div>
-
           {/* Scroll Indicator */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -282,7 +260,6 @@ export default function HomePage() {
           </motion.div>
         </motion.div>
       </section>
-
       {/* WHAT WE DO - Static Architecture */}
       <section className="relative w-full py-32 px-6 border-t border-white/5">
         <div className="max-w-[120rem] mx-auto">
@@ -337,7 +314,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-
       {/* SERVICES OVERVIEW - Dynamic Data */}
       <section className="relative w-full py-32 px-6 bg-black/20">
         <div className="max-w-[120rem] mx-auto">
@@ -410,7 +386,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* INDUSTRIES - Sticky Scroll Narrative */}
       <section className="relative w-full py-32 px-6">
         <div className="max-w-[120rem] mx-auto">
@@ -477,7 +452,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* CASE STUDIES - Horizontal Scroll / Parallax Cards */}
       <section className="relative w-full py-32 bg-black/40 border-y border-white/5 overflow-hidden">
         <div className="max-w-[120rem] mx-auto px-6 mb-16 text-center">
@@ -542,7 +516,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* CTA BANNER - Immersive Glow */}
       <section className="relative w-full py-40 px-6 overflow-hidden">
         <div className="absolute inset-0 tech-grid opacity-50 z-0" />
@@ -591,7 +564,6 @@ export default function HomePage() {
           </div>
         </motion.div>
       </section>
-
       <Footer />
     </div>
   );

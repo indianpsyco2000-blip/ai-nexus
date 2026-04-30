@@ -25,7 +25,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="font-heading text-2xl font-bold text-foreground">CodeNest</span>
+            <span className="font-heading text-2xl font-bold text-foreground">ZAPSHERE</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -52,7 +52,7 @@ export default function Header() {
               className="relative p-2 text-foreground hover:text-highlight transition-colors"
               aria-label="Shopping cart"
             >
-              <ShoppingCart className="w-5 h-5" />
+
               {itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-highlight text-primary text-xs font-bold rounded-full flex items-center justify-center">
                   {itemCount}
