@@ -36,11 +36,15 @@ export default function HomePage() {
         hls.loadSource('https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8');
         hls.attachMedia(videoRef.current);
         hls.on(HLS.Events.MANIFEST_PARSED, () => {
-          videoRef.current?.play();
+          videoRef.current?.play().catch(() => {
+            // Autoplay failed, user interaction may be required
+          });
         });
       } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
         videoRef.current.src = 'https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8';
-        videoRef.current.play();
+        videoRef.current.play().catch(() => {
+          // Autoplay failed, user interaction may be required
+        });
       }
     } catch (error) {
       console.error('HLS initialization error:', error);
@@ -171,7 +175,7 @@ export default function HomePage() {
           pointer-events: none;
         }
       `}</style>
-      {/* HERO SECTION - CodeNest */}
+      {/* HERO SECTION */}
       <section className="relative w-full min-h-screen md:min-h-[100vh] flex items-center justify-center overflow-hidden pt-20 md:pt-32 bg-background">
         {/* Background Video */}
         <video
@@ -180,6 +184,7 @@ export default function HomePage() {
           muted
           loop
           playsInline
+          preload="auto"
         />
 
         {/* Video Overlays */}
@@ -205,8 +210,6 @@ export default function HomePage() {
           style={{ y: heroY, opacity: heroOpacity }}
           className="relative z-10 w-full max-w-[120rem] mx-auto px-4 sm:px-6 flex flex-col items-center text-center"
         >
-          {/* Liquid Glass Card */}
-
           {/* Eyebrow */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -223,7 +226,7 @@ export default function HomePage() {
             transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold uppercase leading-tight tracking-tight mb-4 md:mb-6 text-foreground px-4"
           >
-            LAUNCH YOUR CODING CAREER<motion.span 
+            Automate Your <br className="hidden sm:block" />Business<motion.span 
               className="text-[#5ed29c] inline-block"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -236,35 +239,6 @@ export default function HomePage() {
             transition={{ duration: 1, delay: 0.6 }}
             className="font-sans text-xs sm:text-sm md:text-base lg:text-lg text-foreground/70 max-w-[512px] mx-auto mb-8 md:mb-12 leading-relaxed px-4"
           >From AI Agents to workflow automations- we build tools that scale your growth.</motion.p>
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 bg-[#5ed29c] text-[#070b0a] font-sans font-bold uppercase tracking-wider text-xs md:text-sm rounded-full transition-all hover:shadow-lg hover:shadow-[#5ed29c]/50"
-              >
-                Get Started
-                <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
-              </Link>
-            </motion.div>
-          </motion.div>
-          {/* Scroll Indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          >
-            <span className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Scroll to explore</span>
-            <div className="w-[1px] h-12 bg-gradient-to-b from-foreground/40 to-transparent" />
-          </motion.div>
         </motion.div>
       </section>
       {/* WHAT WE DO - Static Architecture */}
