@@ -231,9 +231,7 @@ export default function HomePage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
             className="font-sans text-sm md:text-base lg:text-lg text-foreground/70 max-w-[512px] mx-auto mb-12 leading-relaxed"
-          >
-            Master in-demand coding skills with hands-on projects, real-world mentorship, and a curriculum designed for today's tech industry.
-          </motion.p>
+          >From AI Agents to workflow automations- we build tools that scale your growth.</motion.p>
           {/* CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
