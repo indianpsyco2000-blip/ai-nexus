@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Brain, Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -43,169 +44,256 @@ export default function Footer() {
     { icon: Instagram, href: '#', label: 'Instagram' },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
   return (
-    <footer className="w-full bg-background border-t border-highlight/20">
-      <div className="max-w-[100rem] mx-auto px-6 py-16">
+    <footer className="w-full bg-background border-t border-highlight/20 overflow-hidden">
+      <div className="max-w-[120rem] mx-auto px-4 sm:px-6 py-12 sm:py-16">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-12">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-12 mb-12"
+        >
           {/* Brand Section */}
-          <div className="lg:col-span-4">
+          <motion.div variants={itemVariants} className="lg:col-span-4">
             <Link to="/" className="flex items-center gap-3 mb-6 group">
-              <div className="relative">
+              <motion.div 
+                className="relative"
+                whileHover={{ scale: 1.1, rotate: 10 }}
+              >
                 <Brain className="w-10 h-10 text-accent transition-transform duration-300 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-accent/30 rounded-full blur-lg group-hover:blur-xl transition-all duration-300" />
-              </div>
-              <span className="font-heading text-xl font-bold uppercase text-foreground">
+              </motion.div>
+              <span className="font-heading text-lg sm:text-xl font-bold uppercase text-foreground">
                 AI Nexus
               </span>
             </Link>
             
-            <p className="font-paragraph text-foreground/80 mb-6 leading-relaxed">
+            <p className="font-paragraph text-sm sm:text-base text-foreground/80 mb-6 leading-relaxed">
               Transforming businesses with intelligent AI solutions, workflow automation, and cutting-edge digital marketing strategies.
             </p>
 
             {/* Contact Info */}
             <div className="space-y-3">
-              <div className="flex items-center gap-3 text-foreground/80">
-                <Mail className="w-5 h-5 text-accent" />
-                <a href="mailto:info@ainexus.com" className="hover:text-accent transition-colors">
+              <motion.div 
+                className="flex items-center gap-3 text-foreground/80 group cursor-pointer"
+                whileHover={{ x: 5 }}
+              >
+                <Mail className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
+                <a href="mailto:info@ainexus.com" className="hover:text-accent transition-colors text-sm sm:text-base">
                   info@ainexus.com
                 </a>
-              </div>
-              <div className="flex items-center gap-3 text-foreground/80">
-                <Phone className="w-5 h-5 text-accent" />
-                <a href="tel:+1234567890" className="hover:text-accent transition-colors">
+              </motion.div>
+              <motion.div 
+                className="flex items-center gap-3 text-foreground/80 group cursor-pointer"
+                whileHover={{ x: 5 }}
+              >
+                <Phone className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
+                <a href="tel:+1234567890" className="hover:text-accent transition-colors text-sm sm:text-base">
                   +1 (234) 567-890
                 </a>
-              </div>
-              <div className="flex items-center gap-3 text-foreground/80">
-                <MapPin className="w-5 h-5 text-accent" />
-                <span>Global Virtual Presence</span>
-              </div>
+              </motion.div>
+              <motion.div 
+                className="flex items-center gap-3 text-foreground/80 group"
+                whileHover={{ x: 5 }}
+              >
+                <MapPin className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
+                <span className="text-sm sm:text-base">Global Virtual Presence</span>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Services Links */}
-          <div className="lg:col-span-2">
-            <h3 className="font-heading text-lg font-bold uppercase mb-6 text-foreground">
+          <motion.div variants={itemVariants} className="lg:col-span-2">
+            <h3 className="font-heading text-base sm:text-lg font-bold uppercase mb-6 text-foreground">
               Services
             </h3>
             <ul className="space-y-3">
-              {footerLinks.services.map((link) => (
-                <li key={link.name}>
+              {footerLinks.services.map((link, i) => (
+                <motion.li 
+                  key={link.name}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
                   <Link
                     to={link.path}
-                    className="font-paragraph text-foreground/80 hover:text-accent transition-colors duration-300 flex items-center gap-2 group"
+                    className="font-paragraph text-sm text-foreground/80 hover:text-accent transition-colors duration-300 flex items-center gap-2 group"
                   >
-                    <span className="w-0 h-0.5 bg-accent group-hover:w-4 transition-all duration-300" />
+                    <motion.span 
+                      className="w-0 h-0.5 bg-accent"
+                      whileHover={{ width: '1rem' }}
+                      transition={{ duration: 0.3 }}
+                    />
                     {link.name}
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Company Links */}
-          <div className="lg:col-span-2">
-            <h3 className="font-heading text-lg font-bold uppercase mb-6 text-foreground">
+          <motion.div variants={itemVariants} className="lg:col-span-2">
+            <h3 className="font-heading text-base sm:text-lg font-bold uppercase mb-6 text-foreground">
               Company
             </h3>
             <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
+              {footerLinks.company.map((link, i) => (
+                <motion.li 
+                  key={link.name}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
                   <Link
                     to={link.path}
-                    className="font-paragraph text-foreground/80 hover:text-accent transition-colors duration-300 flex items-center gap-2 group"
+                    className="font-paragraph text-sm text-foreground/80 hover:text-accent transition-colors duration-300 flex items-center gap-2 group"
                   >
-                    <span className="w-0 h-0.5 bg-accent group-hover:w-4 transition-all duration-300" />
+                    <motion.span 
+                      className="w-0 h-0.5 bg-accent"
+                      whileHover={{ width: '1rem' }}
+                      transition={{ duration: 0.3 }}
+                    />
                     {link.name}
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Resources Links */}
-          <div className="lg:col-span-2">
-            <h3 className="font-heading text-lg font-bold uppercase mb-6 text-foreground">
+          <motion.div variants={itemVariants} className="lg:col-span-2">
+            <h3 className="font-heading text-base sm:text-lg font-bold uppercase mb-6 text-foreground">
               Resources
             </h3>
             <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
+              {footerLinks.resources.map((link, i) => (
+                <motion.li 
+                  key={link.name}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
                   <Link
                     to={link.path}
-                    className="font-paragraph text-foreground/80 hover:text-accent transition-colors duration-300 flex items-center gap-2 group"
+                    className="font-paragraph text-sm text-foreground/80 hover:text-accent transition-colors duration-300 flex items-center gap-2 group"
                   >
-                    <span className="w-0 h-0.5 bg-accent group-hover:w-4 transition-all duration-300" />
+                    <motion.span 
+                      className="w-0 h-0.5 bg-accent"
+                      whileHover={{ width: '1rem' }}
+                      transition={{ duration: 0.3 }}
+                    />
                     {link.name}
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Newsletter Section */}
-          <div className="lg:col-span-2">
-            <h3 className="font-heading text-lg font-bold uppercase mb-6 text-foreground">
+          <motion.div variants={itemVariants} className="lg:col-span-2">
+            <h3 className="font-heading text-base sm:text-lg font-bold uppercase mb-6 text-foreground">
               Newsletter
             </h3>
-            <p className="font-paragraph text-sm text-foreground/80 mb-4">
+            <p className="font-paragraph text-xs sm:text-sm text-foreground/80 mb-4">
               Stay updated with AI trends and insights
             </p>
             <form onSubmit={handleNewsletterSubmit} className="space-y-3">
-              <input
+              <motion.input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email"
                 required
-                className="w-full px-4 py-2 bg-background/50 border border-foreground/20 rounded-lg text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-accent transition-colors"
+                className="w-full px-3 sm:px-4 py-2 bg-background/50 border border-foreground/20 rounded-lg text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-accent transition-colors text-sm"
+                whileFocus={{ scale: 1.02 }}
               />
-              <button
+              <motion.button
                 type="submit"
-                className="w-full px-4 py-2 bg-accent text-primary-foreground font-semibold rounded-lg transition-all duration-300 hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/30 flex items-center justify-center gap-2"
+                className="w-full px-3 sm:px-4 py-2 bg-accent text-primary-foreground font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 flex items-center justify-center gap-2 text-sm"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {subscribed ? 'Subscribed!' : 'Subscribe'}
                 {!subscribed && <ArrowRight className="w-4 h-4" />}
-              </button>
+              </motion.button>
             </form>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Social Links & Bottom Bar */}
-        <div className="pt-8 border-t border-highlight/20">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="pt-8 border-t border-highlight/20"
+        >
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             {/* Social Links */}
             <div className="flex items-center gap-4">
-              {socialLinks.map((social) => (
-                <a
+              {socialLinks.map((social, i) => (
+                <motion.a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 flex items-center justify-center bg-background/50 border border-foreground/20 rounded-full text-foreground/80 hover:text-accent hover:border-accent transition-all duration-300 hover:scale-110"
+                  className="w-10 h-10 flex items-center justify-center bg-background/50 border border-foreground/20 rounded-full text-foreground/80 hover:text-accent hover:border-accent transition-all duration-300"
+                  whileHover={{ scale: 1.15, rotate: 10 }}
+                  whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
                 >
                   <social.icon className="w-5 h-5" />
-                </a>
+                </motion.a>
               ))}
             </div>
 
             {/* Copyright */}
-            <p className="font-paragraph text-sm text-foreground/60 text-center">
+            <motion.p 
+              className="font-paragraph text-xs sm:text-sm text-foreground/60 text-center"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+            >
               © {new Date().getFullYear()} AI Nexus. All rights reserved.
-            </p>
+            </motion.p>
 
             {/* Legal Links */}
-            <div className="flex items-center gap-6">
-              <a href="#" className="font-paragraph text-sm text-foreground/60 hover:text-accent transition-colors">
+            <div className="flex items-center gap-4 sm:gap-6">
+              <motion.a 
+                href="#" 
+                className="font-paragraph text-xs sm:text-sm text-foreground/60 hover:text-accent transition-colors"
+                whileHover={{ x: 2 }}
+              >
                 Privacy Policy
-              </a>
-              <a href="#" className="font-paragraph text-sm text-foreground/60 hover:text-accent transition-colors">
+              </motion.a>
+              <motion.a 
+                href="#" 
+                className="font-paragraph text-xs sm:text-sm text-foreground/60 hover:text-accent transition-colors"
+                whileHover={{ x: 2 }}
+              >
                 Terms of Service
-              </a>
+              </motion.a>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

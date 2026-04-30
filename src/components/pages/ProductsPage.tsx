@@ -54,10 +54,10 @@ export default function ProductsPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full max-w-[100rem] mx-auto px-6 py-24 overflow-hidden">
+      <section className="relative w-full max-w-[120rem] mx-auto px-4 sm:px-6 py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
-            className="absolute top-1/4 left-1/3 w-96 h-96 bg-highlight/20 rounded-full blur-3xl"
+            className="absolute top-1/4 left-1/3 w-64 sm:w-96 h-64 sm:h-96 bg-highlight/20 rounded-full blur-3xl"
             animate={{
               scale: [1, 1.3, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -80,24 +80,29 @@ export default function ProductsPage() {
             variants={fadeInUp}
             className="mb-6 flex justify-center"
           >
-            <Package className="w-20 h-20 text-highlight" strokeWidth={1} />
+            <motion.div
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            >
+              <Package className="w-16 sm:w-20 h-16 sm:h-20 text-highlight" strokeWidth={1} />
+            </motion.div>
           </motion.div>
 
           <motion.h1
             variants={fadeInUp}
-            className="font-heading text-5xl md:text-7xl font-bold uppercase mb-6"
+            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase mb-4 md:mb-6 px-4"
           >
             Our Products
           </motion.h1>
           <motion.p
             variants={fadeInUp}
-            className="font-paragraph text-xl md:text-2xl text-foreground/80 mb-8"
+            className="font-paragraph text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/80 mb-6 md:mb-8 px-4"
           >
             Pre-Built Solutions to Accelerate Your Growth
           </motion.p>
           <motion.p
             variants={fadeInUp}
-            className="font-paragraph text-lg text-foreground/70 max-w-3xl mx-auto"
+            className="font-paragraph text-sm sm:text-base md:text-lg text-foreground/70 max-w-3xl mx-auto px-4"
           >
             Explore our collection of ready-to-deploy AI agent templates, workflow automation solutions, and custom tools designed to streamline your operations.
           </motion.p>
@@ -105,30 +110,35 @@ export default function ProductsPage() {
       </section>
 
       {/* Category Filter */}
-      <section className="w-full max-w-[100rem] mx-auto px-6 py-8">
+      <section className="w-full max-w-[120rem] mx-auto px-4 sm:px-6 py-6 md:py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-wrap gap-4 justify-center"
+          className="flex flex-wrap gap-3 sm:gap-4 justify-center"
         >
-          {categories.map((category) => (
-            <button
+          {categories.map((category, i) => (
+            <motion.button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 font-semibold rounded-full transition-all duration-300 ${
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              className={`px-4 sm:px-6 py-2 sm:py-3 font-semibold rounded-full transition-all duration-300 text-xs sm:text-sm ${
                 selectedCategory === category
                   ? 'bg-gradient-to-r from-accent to-highlight text-primary-foreground shadow-lg shadow-accent/30'
                   : 'bg-background/50 border border-foreground/20 text-foreground/80 hover:border-accent/50'
               }`}
             >
               {category}
-            </button>
+            </motion.button>
           ))}
         </motion.div>
       </section>
 
       {/* Products Grid */}
-      <section className="w-full max-w-[100rem] mx-auto px-6 py-16">
+      <section className="w-full max-w-[120rem] mx-auto px-4 sm:px-6 py-12 md:py-16">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -136,7 +146,7 @@ export default function ProductsPage() {
           className="min-h-[600px]"
         >
           {isLoading ? null : filteredProducts.length > 0 ? (
-            <motion.div variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div variants={staggerContainer} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {filteredProducts.map((product) => (
                 <motion.div
                   key={product._id}
@@ -145,7 +155,10 @@ export default function ProductsPage() {
                   className="group"
                 >
                   <Link to={`/product/${product._id}`} className="block h-full">
-                    <div className="relative bg-background/50 backdrop-blur-lg border border-foreground/10 rounded-2xl overflow-hidden h-full transition-all duration-300 hover:border-highlight/50 hover:shadow-xl hover:shadow-highlight/20 cursor-pointer">
+                    <motion.div 
+                      className="relative bg-background/50 backdrop-blur-lg border border-foreground/10 rounded-2xl overflow-hidden h-full transition-all duration-300 hover:border-highlight/50 hover:shadow-xl hover:shadow-highlight/20 cursor-pointer"
+                      whileHover={{ borderColor: "rgba(50, 224, 196, 0.5)" }}
+                    >
                       {product.itemImage && (
                         <div className="relative h-64 overflow-hidden">
                           <Image
@@ -190,7 +203,7 @@ export default function ProductsPage() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   </Link>
                 </motion.div>
               ))}

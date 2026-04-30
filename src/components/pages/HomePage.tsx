@@ -172,7 +172,7 @@ export default function HomePage() {
         }
       `}</style>
       {/* HERO SECTION - CodeNest */}
-      <section className="relative w-full min-h-[100vh] flex items-center justify-center overflow-hidden pt-32 bg-background">
+      <section className="relative w-full min-h-screen md:min-h-[100vh] flex items-center justify-center overflow-hidden pt-20 md:pt-32 bg-background">
         {/* Background Video */}
         <video
           ref={videoRef}
@@ -203,7 +203,7 @@ export default function HomePage() {
 
         <motion.div 
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 w-full max-w-[120rem] mx-auto px-6 flex flex-col items-center text-center"
+          className="relative z-10 w-full max-w-[120rem] mx-auto px-4 sm:px-6 flex flex-col items-center text-center"
         >
           {/* Liquid Glass Card */}
 
@@ -212,7 +212,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mb-6"
+            className="mb-4 md:mb-6"
           >
             <span className="font-sans font-bold text-xs md:text-sm tracking-widest text-[#5ed29c] uppercase">AI - Automation services</span>
           </motion.div>
@@ -221,16 +221,20 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold uppercase leading-tight tracking-tight mb-6 text-foreground"
+            className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold uppercase leading-tight tracking-tight mb-4 md:mb-6 text-foreground px-4"
           >
-            LAUNCH YOUR CODING CAREER<span className="text-[#5ed29c]">.</span>
+            LAUNCH YOUR CODING CAREER<motion.span 
+              className="text-[#5ed29c] inline-block"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >.</motion.span>
           </motion.h1>
           {/* Description */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="font-sans text-sm md:text-base lg:text-lg text-foreground/70 max-w-[512px] mx-auto mb-12 leading-relaxed"
+            className="font-sans text-xs sm:text-sm md:text-base lg:text-lg text-foreground/70 max-w-[512px] mx-auto mb-8 md:mb-12 leading-relaxed px-4"
           >From AI Agents to workflow automations- we build tools that scale your growth.</motion.p>
           {/* CTA Button */}
           <motion.div
@@ -238,13 +242,18 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-[#5ed29c] text-[#070b0a] font-sans font-bold uppercase tracking-wider text-sm rounded-full transition-all hover:scale-105 hover:shadow-lg hover:shadow-[#5ed29c]/50"
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Get Started
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 bg-[#5ed29c] text-[#070b0a] font-sans font-bold uppercase tracking-wider text-xs md:text-sm rounded-full transition-all hover:shadow-lg hover:shadow-[#5ed29c]/50"
+              >
+                Get Started
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+              </Link>
+            </motion.div>
           </motion.div>
           {/* Scroll Indicator */}
           <motion.div

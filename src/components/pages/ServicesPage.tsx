@@ -97,10 +97,10 @@ export default function ServicesPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative w-full max-w-[100rem] mx-auto px-6 py-24 overflow-hidden">
+      <section className="relative w-full max-w-[120rem] mx-auto px-4 sm:px-6 py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
-            className="absolute top-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl"
+            className="absolute top-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-accent/20 rounded-full blur-3xl"
             animate={{
               scale: [1, 1.3, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -121,19 +121,19 @@ export default function ServicesPage() {
         >
           <motion.h1
             variants={fadeInUp}
-            className="font-heading text-5xl md:text-7xl font-bold uppercase mb-6"
+            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase mb-4 md:mb-6 px-4"
           >
             AI + Automation + Marketing
           </motion.h1>
           <motion.p
             variants={fadeInUp}
-            className="font-paragraph text-xl md:text-2xl text-foreground/80 mb-8"
+            className="font-paragraph text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/80 mb-6 md:mb-8 px-4"
           >
             Everything You Need to Scale
           </motion.p>
           <motion.p
             variants={fadeInUp}
-            className="font-paragraph text-lg text-foreground/70 max-w-3xl mx-auto"
+            className="font-paragraph text-sm sm:text-base md:text-lg text-foreground/70 max-w-3xl mx-auto px-4"
           >
             From intelligent AI agents to comprehensive digital marketing strategies, we deliver end-to-end solutions that transform your business operations and accelerate growth.
           </motion.p>
@@ -141,8 +141,8 @@ export default function ServicesPage() {
       </section>
 
       {/* Service Categories Section */}
-      <section className="w-full max-w-[100rem] mx-auto px-6 py-16">
-        <div className="space-y-24">
+      <section className="w-full max-w-[120rem] mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <div className="space-y-16 md:space-y-24">
           {serviceCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
@@ -155,20 +155,23 @@ export default function ServicesPage() {
               {/* Category Header */}
               <motion.div
                 variants={fadeInUp}
-                className="flex flex-col lg:flex-row items-start lg:items-center gap-6 mb-12"
+                className="flex flex-col lg:flex-row items-start lg:items-center gap-6 mb-8 md:mb-12"
               >
-                <div className="relative">
-                  <div className="w-20 h-20 flex items-center justify-center bg-gradient-to-br from-accent/20 to-highlight/20 rounded-2xl">
-                    <category.icon className="w-10 h-10 text-accent" strokeWidth={1.5} />
+                <motion.div 
+                  className="relative"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                >
+                  <div className="w-16 sm:w-20 h-16 sm:h-20 flex items-center justify-center bg-gradient-to-br from-accent/20 to-highlight/20 rounded-2xl">
+                    <category.icon className="w-8 sm:w-10 h-8 sm:h-10 text-accent" strokeWidth={1.5} />
                   </div>
                   <div className="absolute inset-0 bg-accent/20 rounded-2xl blur-xl" />
-                </div>
+                </motion.div>
                 
                 <div className="flex-1">
-                  <h2 className="font-heading text-3xl md:text-5xl font-bold uppercase mb-4">
+                  <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase mb-3 md:mb-4">
                     {category.title}
                   </h2>
-                  <p className="font-paragraph text-lg text-foreground/80 max-w-3xl">
+                  <p className="font-paragraph text-sm sm:text-base md:text-lg text-foreground/80 max-w-3xl">
                     {category.description}
                   </p>
                 </div>
@@ -177,7 +180,7 @@ export default function ServicesPage() {
               {/* Sub-Services Grid */}
               <motion.div
                 variants={staggerContainer}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
               >
                 {category.subServices.map((subService, index) => (
                   <motion.div
@@ -186,18 +189,24 @@ export default function ServicesPage() {
                     whileHover={{ y: -5 }}
                     className="group"
                   >
-                    <div className="relative bg-background/50 backdrop-blur-lg border border-foreground/10 rounded-xl p-6 h-full transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/20">
+                    <motion.div 
+                      className="relative bg-background/50 backdrop-blur-lg border border-foreground/10 rounded-xl p-4 md:p-6 h-full transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/20"
+                      whileHover={{ borderColor: "rgba(28, 130, 227, 0.5)" }}
+                    >
                       <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       
-                      <div className="relative z-10 flex items-start gap-4">
-                        <div className="flex-shrink-0">
-                          <subService.icon className="w-6 h-6 text-accent" strokeWidth={1.5} />
-                        </div>
-                        <p className="font-paragraph text-foreground/90 leading-relaxed">
+                      <div className="relative z-10 flex items-start gap-3 md:gap-4">
+                        <motion.div 
+                          className="flex-shrink-0"
+                          whileHover={{ scale: 1.2, rotate: 10 }}
+                        >
+                          <subService.icon className="w-5 md:w-6 h-5 md:h-6 text-accent" strokeWidth={1.5} />
+                        </motion.div>
+                        <p className="font-paragraph text-xs sm:text-sm md:text-base text-foreground/90 leading-relaxed">
                           {subService.name}
                         </p>
                       </div>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 ))}
               </motion.div>
