@@ -13,6 +13,8 @@ export default function Header() {
   const navLinks = [
     { name: 'Services', path: '/services' },
     { name: 'Products', path: '/products' },
+    { name: 'Industries', path: '/industries' },
+    { name: 'Resources', path: '/resources' },
     { name: 'Case Studies', path: '/case-studies' },
     { name: 'Pricing', path: '/pricing' },
   ];
