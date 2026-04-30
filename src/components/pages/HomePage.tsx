@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Brain, Zap, Code, ArrowRight, TrendingUp, Award, Cpu, Network, Database, ChevronRight, Terminal, Activity } from 'lucide-react';
+import { Brain, Zap, Code, ArrowRight, TrendingUp, Award, Cpu, Network, Database, ChevronRight, Terminal, Activity, Menu, X } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -14,6 +14,8 @@ export default function HomePage() {
   const [caseStudies, setCaseStudies] = useState<CaseStudies[]>([]);
   const [industries, setIndustries] = useState<Industries[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 150]);
@@ -21,7 +23,29 @@ export default function HomePage() {
 
   useEffect(() => {
     loadData();
+    initializeHLS();
   }, []);
+
+  const initializeHLS = async () => {
+    if (!videoRef.current) return;
+    
+    try {
+      const HLS = (await import('hls.js')).default;
+      if (HLS.isSupported()) {
+        const hls = new HLS({ enableWorker: false });
+        hls.loadSource('https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8');
+        hls.attachMedia(videoRef.current);
+        hls.on(HLS.Events.MANIFEST_PARSED, () => {
+          videoRef.current?.play();
+        });
+      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+        videoRef.current.src = 'https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8';
+        videoRef.current.play();
+      }
+    } catch (error) {
+      console.error('HLS initialization error:', error);
+    }
+  };
 
   const loadData = async () => {
     setIsLoading(true);
@@ -64,6 +88,8 @@ export default function HomePage() {
       <Header />
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@700&family=Instrument+Serif:ital@1&display=swap');
+
         .tech-grid {
           background-size: 50px 50px;
           background-image: 
@@ -93,142 +119,167 @@ export default function HomePage() {
         .neon-glow:hover {
           box-shadow: 0 0 40px rgba(50, 224, 196, 0.8), inset 0 0 20px rgba(50, 224, 196, 0.2);
         }
+        
+        /* Liquid Glass Card Styles */
+        .liquid-glass-card {
+          background: rgba(255, 255, 255, 0.01);
+          background-blend-mode: luminosity;
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          position: relative;
+        }
+        
+        .liquid-glass-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          padding: 1.4px;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          border-radius: 12px;
+          pointer-events: none;
+        }
+
+        /* Vertical Grid Lines */
+        .hero-grid-lines {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+        }
+
+        .grid-line {
+          position: absolute;
+          width: 1px;
+          height: 100%;
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Central Glow Ellipse */
+        .central-glow {
+          position: absolute;
+          top: 15%;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 800px;
+          height: 300px;
+          background: radial-gradient(ellipse at center, rgba(94, 210, 156, 0.3), transparent 70%);
+          filter: blur(25px);
+          pointer-events: none;
+        }
       `}</style>
 
-      {/* HERO SECTION */}
-      <section className="relative w-full min-h-[100vh] flex items-center justify-center overflow-hidden pt-20">
-        <div className="absolute inset-0 tech-grid z-0" />
-        
-        {/* Animated Background Orbs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-accent/20 rounded-full blur-[150px]"
-            animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4], x: [0, 80, 0] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] bg-highlight/25 rounded-full blur-[140px]"
-            animate={{ scale: [1.2, 0.9, 1.2], opacity: [0.5, 0.3, 0.5], y: [0, -80, 0], x: [0, 60, 0] }}
-            transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute top-1/2 right-1/3 w-[25vw] h-[25vw] bg-accent/15 rounded-full blur-[120px]"
-            animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.3, 0.6, 0.3], x: [0, -100, 0] }}
-            transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
+      {/* HERO SECTION - CodeNest */}
+      <section className="relative w-full min-h-[100vh] flex items-center justify-center overflow-hidden pt-20 bg-background">
+        {/* Background Video */}
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover opacity-60 z-0"
+          muted
+          loop
+          playsInline
+        />
+
+        {/* Video Overlays */}
+        <div className="absolute inset-0 z-1">
+          {/* Left Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#070b0a] via-[#070b0a]/50 to-transparent" />
+          
+          {/* Bottom Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         </div>
+
+        {/* Vertical Grid Lines - Desktop Only */}
+        <div className="hidden lg:block hero-grid-lines z-2">
+          <div className="grid-line" style={{ left: '25%' }} />
+          <div className="grid-line" style={{ left: '50%' }} />
+          <div className="grid-line" style={{ left: '75%' }} />
+        </div>
+
+        {/* Central Glow */}
+        <div className="central-glow z-2" />
 
         <motion.div 
           style={{ y: heroY, opacity: heroOpacity }}
           className="relative z-10 w-full max-w-[120rem] mx-auto px-6 flex flex-col items-center text-center"
         >
-          {/* AI Core Visual */}
+          {/* Liquid Glass Card */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            className="relative w-48 h-48 md:w-64 md:h-64 mb-12 flex items-center justify-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="liquid-glass-card w-48 md:w-56 p-6 mb-12 transform -translate-y-[50px]"
           >
-            <motion.div
-              className="absolute inset-0 border border-highlight/40 rounded-full"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.div
-              className="absolute inset-4 border border-accent/30 rounded-full border-dashed"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.div
-              className="absolute inset-8 border border-highlight/20 rounded-full"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-highlight/10 to-accent/5 rounded-full blur-2xl animate-pulse" />
-            <Brain className="w-20 h-20 md:w-28 md:h-28 text-highlight relative z-10 drop-shadow-[0_0_25px_rgba(50,224,196,1)]" strokeWidth={1} />
-            
-            {/* Floating Data Nodes */}
-            {[...Array(4)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-3 h-3 bg-highlight rounded-full shadow-[0_0_15px_#32E0C4] neon-glow"
-                animate={{
-                  x: [Math.cos(i * 90) * 100, Math.cos(i * 90) * 130, Math.cos(i * 90) * 100],
-                  y: [Math.sin(i * 90) * 100, Math.sin(i * 90) * 130, Math.sin(i * 90) * 100],
-                  opacity: [0.6, 1, 0.6],
-                  scale: [1, 1.3, 1]
-                }}
-                transition={{ duration: 4 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
-              />
-            ))}
+            <div className="text-center space-y-3">
+              <div className="text-sm font-mono text-highlight tracking-widest">[ 2025 ]</div>
+              <h3 className="text-lg md:text-xl font-bold text-foreground">
+                Taught by <span className="italic font-serif text-highlight">Industry</span> Professionals
+              </h3>
+              <p className="text-xs text-foreground/70">Master in-demand coding skills from experts</p>
+            </div>
           </motion.div>
 
+          {/* Eyebrow */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-highlight/50 bg-highlight/10 backdrop-blur-md mb-8 neon-glow"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mb-6"
           >
-            <Activity className="w-4 h-4 text-highlight animate-pulse" />
-            <span className="text-xs font-mono tracking-widest text-highlight uppercase font-bold">System Online // V.2.0</span>
+            <span className="font-sans font-bold text-xs md:text-sm tracking-widest text-[#5ed29c] uppercase">
+              Career-Ready Curriculum
+            </span>
           </motion.div>
 
+          {/* Main Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="font-heading text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold uppercase leading-[0.9] tracking-tighter mb-6"
+            className="font-sans text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold uppercase leading-tight tracking-tight mb-6 text-foreground"
           >
-            <span className="block text-transparent bg-clip-text bg-gradient-to-b from-foreground to-foreground/50">Automate Your</span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-accent via-highlight to-accent glow-text">Business</span>
+            LAUNCH YOUR CODING CAREER<span className="text-[#5ed29c]">.</span>
           </motion.h1>
 
+          {/* Description */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="text-lg md:text-xl lg:text-2xl text-foreground/70 max-w-3xl mx-auto mb-12 font-light tracking-wide"
+            transition={{ duration: 1, delay: 0.6 }}
+            className="font-sans text-sm md:text-base lg:text-lg text-foreground/70 max-w-[512px] mx-auto mb-12 leading-relaxed"
           >
-            From AI Agents to Workflow Automation — We Build Tools That Scale Your Growth.
+            Master in-demand coding skills with hands-on projects, real-world mentorship, and a curriculum designed for today's tech industry.
           </motion.p>
 
+          {/* CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col sm:flex-row gap-6 items-center"
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
             <Link
               to="/contact"
-              className="group relative px-8 py-4 bg-accent text-primary-foreground font-heading font-bold uppercase tracking-wider text-sm overflow-hidden clip-diagonal transition-all hover:bg-highlight hover:text-primary"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#5ed29c] text-[#070b0a] font-sans font-bold uppercase tracking-wider text-sm rounded-full transition-all hover:scale-105 hover:shadow-lg hover:shadow-[#5ed29c]/50"
             >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-              <span className="relative z-10 flex items-center gap-2">
-                Initialize Sequence
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </Link>
-            <Link
-              to="/case-studies"
-              className="group px-8 py-4 border border-foreground/20 text-foreground font-heading font-bold uppercase tracking-wider text-sm clip-diagonal transition-all hover:border-highlight hover:text-highlight hover:bg-highlight/5"
-            >
-              <span className="flex items-center gap-2">
-                View Architecture
-                <Terminal className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-              </span>
+              Get Started
+              <ArrowRight className="w-5 h-5" />
             </Link>
           </motion.div>
-        </motion.div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Scroll to explore</span>
-          <div className="w-[1px] h-12 bg-gradient-to-b from-foreground/40 to-transparent" />
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 1 }}
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          >
+            <span className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Scroll to explore</span>
+            <div className="w-[1px] h-12 bg-gradient-to-b from-foreground/40 to-transparent" />
+          </motion.div>
         </motion.div>
       </section>
 

@@ -20,7 +20,9 @@ export default {
             },
             fontFamily: {
                 heading: "montserrat",
-                paragraph: "open sans"
+                paragraph: "open sans",
+                sans: "'Inter', sans-serif",
+                serif: "'Instrument Serif', serif"
             },
             colors: {
                 accent: '#1C82E3',
