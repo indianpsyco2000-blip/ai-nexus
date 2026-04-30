@@ -6,6 +6,7 @@ import { Brain, Zap, Code, ArrowRight, TrendingUp, Award, Cpu, Network, Database
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ToolsOrbit from '@/components/ToolsOrbit';
 import { BaseCrudService } from '@/integrations';
 import { Services, CaseStudies, Industries } from '@/entities';
 
@@ -241,6 +242,8 @@ export default function HomePage() {
           >From AI Agents to workflow automations- we build tools that scale your growth.</motion.p>
         </motion.div>
       </section>
+      {/* TOOLS ORBIT SECTION */}
+      <ToolsOrbit />
       {/* WHAT WE DO - Static Architecture */}
       <section className="relative w-full py-32 px-6 border-t border-white/5">
         <div className="max-w-[120rem] mx-auto">

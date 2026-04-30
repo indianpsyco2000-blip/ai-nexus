@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShoppingCart, ArrowLeft, Package, Check } from 'lucide-react';
+import { ArrowLeft, Package } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { BaseCrudService, useCart, useCurrency, formatPrice, DEFAULT_CURRENCY } from '@/integrations';
+import { BaseCrudService, useCurrency, formatPrice, DEFAULT_CURRENCY } from '@/integrations';
 import { Products } from '@/entities';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 
@@ -13,9 +13,6 @@ export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Products | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
-  const [addedToCart, setAddedToCart] = useState(false);
-  const { addingItemId, actions } = useCart();
   const { currency } = useCurrency();
 
   useEffect(() => {
@@ -33,18 +30,6 @@ export default function ProductDetailPage() {
       console.error('Error loading product:', error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleAddToCart = async () => {
-    if (product?._id) {
-      await actions.addToCart({
-        collectionId: 'products',
-        itemId: product._id,
-        quantity
-      });
-      setAddedToCart(true);
-      setTimeout(() => setAddedToCart(false), 2000);
     }
   };
 
@@ -197,61 +182,6 @@ export default function ProductDetailPage() {
               )}
             </motion.div>
 
-            {/* Quantity & Add to Cart */}
-            <motion.div
-              variants={fadeInUp}
-              className="flex flex-col gap-4"
-            >
-              <div className="flex items-center gap-4">
-                <label className="font-heading font-semibold">Quantity:</label>
-                <div className="flex items-center border border-foreground/20 rounded-lg">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-4 py-2 hover:bg-foreground/10 transition-colors"
-                  >
-                    −
-                  </button>
-                  <span className="px-6 py-2 font-heading font-bold">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="px-4 py-2 hover:bg-foreground/10 transition-colors"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <button
-                onClick={handleAddToCart}
-                disabled={addingItemId === product._id}
-                className="flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-accent to-highlight text-primary-foreground font-heading font-bold text-lg rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-accent/50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {addedToCart ? (
-                  <>
-                    <Check className="w-6 h-6" />
-                    Added to Cart!
-                  </>
-                ) : addingItemId === product._id ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                    Adding...
-                  </>
-                ) : (
-                  <>
-                    <ShoppingCart className="w-6 h-6" />
-                    Add to Cart
-                  </>
-                )}
-              </button>
-
-              <button
-                onClick={actions.openCart}
-                className="px-8 py-3 border-2 border-accent text-accent font-heading font-bold rounded-full transition-all duration-300 hover:bg-accent/10"
-              >
-                View Cart
-              </button>
-            </motion.div>
-
             {/* Trust Badges */}
             <motion.div
               variants={fadeInUp}
@@ -259,17 +189,17 @@ export default function ProductDetailPage() {
             >
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-highlight flex-shrink-0 mt-1" />
+                  <div className="w-5 h-5 text-highlight flex-shrink-0 mt-1">✓</div>
                   <div>
-                    <p className="font-heading font-bold">Secure Checkout</p>
-                    <p className="font-paragraph text-sm text-foreground/60">Safe & encrypted</p>
+                    <p className="font-heading font-bold">Premium Quality</p>
+                    <p className="font-paragraph text-sm text-foreground/60">Industry-leading solution</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-highlight flex-shrink-0 mt-1" />
+                  <div className="w-5 h-5 text-highlight flex-shrink-0 mt-1">✓</div>
                   <div>
-                    <p className="font-heading font-bold">Instant Access</p>
-                    <p className="font-paragraph text-sm text-foreground/60">Get started immediately</p>
+                    <p className="font-heading font-bold">Expert Support</p>
+                    <p className="font-paragraph text-sm text-foreground/60">Dedicated assistance</p>
                   </div>
                 </div>
               </div>

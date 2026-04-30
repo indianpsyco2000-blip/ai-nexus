@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingCart } from 'lucide-react';
-import { useCart } from '@/integrations';
-import Cart from '@/components/Cart';
+import { Menu, X } from 'lucide-react';
 
 export default function Header() {
-  const { itemCount, actions } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -77,26 +74,6 @@ export default function Header() {
 
           {/* Right Actions */}
           <div className="hidden lg:flex items-center gap-3 xl:gap-4">
-            <motion.button
-              onClick={actions.toggleCart}
-              className="relative p-2 text-foreground hover:text-highlight transition-colors"
-              aria-label="Shopping cart"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {itemCount > 0 && (
-                <motion.span 
-                  className="absolute -top-1 -right-1 w-4 h-4 bg-highlight text-primary text-xs font-bold rounded-full flex items-center justify-center"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 200 }}
-                >
-                  {itemCount}
-                </motion.span>
-              )}
-            </motion.button>
-            
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -154,18 +131,6 @@ export default function Header() {
                   </motion.div>
                 ))}
                 <div className="pt-3 border-t border-white/5 space-y-2">
-                  <motion.button
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      actions.toggleCart();
-                    }}
-                    className="flex items-center justify-center gap-2 w-full px-4 py-2 border border-highlight/30 text-highlight font-paragraph text-sm rounded-lg transition-colors hover:bg-highlight/10"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <ShoppingCart className="w-4 h-4" />
-                    Cart ({itemCount})
-                  </motion.button>
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -184,8 +149,6 @@ export default function Header() {
           )}
         </AnimatePresence>
       </div>
-      {/* Cart Component */}
-      <Cart />
     </header>
   );
 }
