@@ -7,7 +7,7 @@ import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToolsOrbit from '@/components/ToolsOrbit';
-import BackgroundVideo from '@/components/BackgroundVideo';
+import AnimatedHeroBackground from '@/components/AnimatedHeroBackground';
 import { BaseCrudService } from '@/integrations';
 import { Services, CaseStudies, Industries } from '@/entities';
 
@@ -152,34 +152,8 @@ export default function HomePage() {
       `}</style>
       {/* HERO SECTION */}
       <section className="relative w-full min-h-screen md:min-h-[100vh] flex items-center justify-center overflow-hidden pt-20 md:pt-32 bg-background">
-        {/* Background Video Component */}
-        <BackgroundVideo />
-
-        {/* Top-left Glow */}
-        <div
-          className="absolute z-1 rounded-full blur-[120px] pointer-events-none"
-          style={{
-            top: '-20%',
-            left: '20%',
-            width: '600px',
-            height: '600px',
-            backgroundColor: 'rgba(30, 58, 138, 0.2)',
-            mixBlendMode: 'screen',
-          }}
-        />
-
-        {/* Bottom-right Glow */}
-        <div
-          className="absolute z-1 rounded-full blur-[120px] pointer-events-none"
-          style={{
-            bottom: '-10%',
-            right: '20%',
-            width: '500px',
-            height: '500px',
-            backgroundColor: 'rgba(55, 48, 163, 0.2)',
-            mixBlendMode: 'screen',
-          }}
-        />
+        {/* Animated Background Component */}
+        <AnimatedHeroBackground />
 
         <motion.div 
           style={{ y: heroY, opacity: heroOpacity }}
