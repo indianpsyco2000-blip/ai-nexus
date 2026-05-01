@@ -217,31 +217,39 @@ export default function HomePage() {
 
             <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
-                { icon: Cpu, title: 'AI Agents', desc: 'Autonomous digital entities capable of complex reasoning, learning, and task execution.', delay: 0 },
-                { icon: Network, title: 'Workflow Automation', desc: 'Seamless integration of disparate systems to create frictionless operational pipelines.', delay: 0.1 },
-                { icon: Database, title: 'Custom Architecture', desc: 'Bespoke software solutions engineered from the ground up for your specific data models.', delay: 0.2 },
-                { icon: Zap, title: 'Performance Optimization', desc: 'Algorithmic refinement of existing processes to maximize throughput and minimize latency.', delay: 0.3 }
-              ].map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={itemVariants}
-                  className="group relative glass-panel p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-highlight/50 neon-glow"
-                >
-                  <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-highlight/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
-                  
-                  <div className="w-14 h-14 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-colors duration-500 neon-glow">
-                    <item.icon className="w-6 h-6 text-highlight group-hover:text-highlight transition-colors duration-500" />
-                  </div>
-                  
-                  <h3 className="font-heading text-xl font-bold uppercase mb-3 tracking-wide">{item.title}</h3>
-                  <p className="text-foreground/60 text-sm leading-relaxed font-light">{item.desc}</p>
-                  
-                  <div className="mt-6 flex items-center gap-2 text-xs font-mono text-highlight opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span>Initialize</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </div>
-                </motion.div>
-              ))}
+                { icon: Cpu, title: 'AI Agents', desc: 'Autonomous digital entities capable of complex reasoning, learning, and task execution.', delay: 0, keyword: 'AI' },
+                { icon: Network, title: 'Workflow Automation', desc: 'Seamless integration of disparate systems to create frictionless operational pipelines.', delay: 0.1, keyword: 'Workflow' },
+                { icon: Database, title: 'Custom Architecture', desc: 'Bespoke software solutions engineered from the ground up for your specific data models.', delay: 0.2, keyword: 'Custom' },
+                { icon: Zap, title: 'Performance Optimization', desc: 'Algorithmic refinement of existing processes to maximize throughput and minimize latency.', delay: 0.3, keyword: 'Performance' }
+              ].map((item, idx) => {
+                const matchingService = services.find(s => 
+                  s.serviceName?.toLowerCase().includes(item.keyword.toLowerCase()) ||
+                  s.category?.toLowerCase().includes(item.keyword.toLowerCase())
+                );
+                
+                return (
+                  <motion.div
+                    key={idx}
+                    variants={itemVariants}
+                    className="group relative glass-panel p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-highlight/50 neon-glow cursor-pointer"
+                    onClick={() => matchingService && (window.location.href = `/service/${matchingService._id}`)}
+                  >
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-highlight/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+                    
+                    <div className="w-14 h-14 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-colors duration-500 neon-glow">
+                      <item.icon className="w-6 h-6 text-highlight group-hover:text-highlight transition-colors duration-500" />
+                    </div>
+                    
+                    <h3 className="font-heading text-xl font-bold uppercase mb-3 tracking-wide">{item.title}</h3>
+                    <p className="text-foreground/60 text-sm leading-relaxed font-light">{item.desc}</p>
+                    
+                    <div className="mt-6 flex items-center gap-2 text-xs font-mono text-highlight opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span>Initialize</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </div>

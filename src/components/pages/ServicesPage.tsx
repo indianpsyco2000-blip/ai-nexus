@@ -222,7 +222,7 @@ export default function ServicesPage() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="min-h-[400px]"
+          className="min-h-[600px]"
         >
           <motion.div variants={fadeInUp} className="text-center mb-16">
             <h2 className="font-heading text-4xl md:text-6xl font-bold uppercase mb-6">
@@ -233,19 +233,30 @@ export default function ServicesPage() {
             </p>
           </motion.div>
 
-          {isLoading ? null : services.length > 0 ? (
+          {isLoading ? (
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-12 h-12 border-2 border-accent/20 border-t-accent rounded-full animate-spin" />
+                <span className="font-mono text-xs text-accent uppercase tracking-widest animate-pulse">Loading Services...</span>
+              </div>
+            </div>
+          ) : services.length > 0 ? (
             <motion.div variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service) => (
+              {services.map((service, idx) => (
                 <motion.div
                   key={service._id}
                   variants={fadeInUp}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
                   whileHover={{ y: -10 }}
                   className="group"
                 >
                   <Link to={`/service/${service._id}`} className="block h-full">
                     <div className="relative bg-background/50 backdrop-blur-lg border border-foreground/10 rounded-2xl overflow-hidden h-full transition-all duration-300 hover:border-accent/50 hover:shadow-xl hover:shadow-accent/20">
-                      {service.serviceImage && (
-                        <div className="relative h-56 overflow-hidden">
+                      {service.serviceImage ? (
+                        <div className="relative h-56 overflow-hidden bg-gradient-to-br from-accent/10 to-highlight/10">
                           <Image
                             src={service.serviceImage}
                             alt={service.serviceName || 'Service'}
@@ -253,6 +264,15 @@ export default function ServicesPage() {
                             width={500}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+                        </div>
+                      ) : (
+                        <div className="relative h-56 overflow-hidden bg-gradient-to-br from-accent/20 to-highlight/20 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center mx-auto mb-2">
+                              <Code className="w-6 h-6 text-accent" />
+                            </div>
+                            <p className="text-xs text-foreground/60 font-mono">Service Image</p>
+                          </div>
                         </div>
                       )}
                       
@@ -267,8 +287,8 @@ export default function ServicesPage() {
                           {service.serviceName}
                         </h3>
                         
-                        <p className="font-paragraph text-foreground/80 leading-relaxed mb-4">
-                          {service.description}
+                        <p className="font-paragraph text-foreground/80 leading-relaxed mb-4 line-clamp-2">
+                          {service.description || service.shortDescription}
                         </p>
                         
                         <div className="inline-flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all">

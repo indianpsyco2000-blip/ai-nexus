@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowLeft, CheckCircle, Zap, Target, TrendingUp } from 'lucide-react';
+import { ArrowRight, ArrowLeft, CheckCircle, Zap, Target, TrendingUp, Code } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import Header from '@/components/Header';
@@ -139,24 +139,35 @@ export default function ServiceDetailPage() {
           </section>
 
           {/* Hero Image */}
-          {service.serviceImage && (
-            <motion.section
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="w-full max-w-[100rem] mx-auto px-6 py-12"
-            >
-              <div className="relative rounded-3xl overflow-hidden h-96 md:h-[500px] border border-foreground/10">
-                <Image
-                  src={service.serviceImage}
-                  alt={service.serviceName || 'Service'}
-                  className="w-full h-full object-cover"
-                  width={1200}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-              </div>
-            </motion.section>
-          )}
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="w-full max-w-[100rem] mx-auto px-6 py-12"
+          >
+            <div className="relative rounded-3xl overflow-hidden h-96 md:h-[500px] border border-foreground/10 bg-gradient-to-br from-accent/20 to-highlight/20">
+              {service.serviceImage ? (
+                <>
+                  <Image
+                    src={service.serviceImage}
+                    alt={service.serviceName || 'Service'}
+                    className="w-full h-full object-cover"
+                    width={1200}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+                </>
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-20 h-20 rounded-lg bg-accent/20 flex items-center justify-center mx-auto mb-4">
+                      <Code className="w-10 h-10 text-accent" />
+                    </div>
+                    <p className="text-foreground/60 font-mono text-sm">Service Image Coming Soon</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.section>
 
           {/* Description Section */}
           <section className="w-full max-w-[100rem] mx-auto px-6 py-24">
