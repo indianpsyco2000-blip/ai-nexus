@@ -1,15 +1,15 @@
 // HPI 1.7-G
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Brain, Zap, Code, ArrowRight, TrendingUp, Award, Cpu, Network, Database, ChevronRight, Terminal, Activity, Menu, X } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ToolsOrbit from '@/components/ToolsOrbit';
+import BackgroundVideo from '@/components/BackgroundVideo';
 import { BaseCrudService } from '@/integrations';
 import { Services, CaseStudies, Industries } from '@/entities';
-import Hls from 'hls.js';
 
 export default function HomePage() {
   const [services, setServices] = useState<Services[]>([]);
@@ -17,7 +17,6 @@ export default function HomePage() {
   const [industries, setIndustries] = useState<Industries[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 150]);
@@ -25,28 +24,6 @@ export default function HomePage() {
 
   useEffect(() => {
     loadData();
-  }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const videoSrc = "https://stream.mux.com/T6oQJQ02cQ6N01TR6iHwZkKFkbepS34dkkIc9iukgy400g.m3u8";
-
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(videoSrc);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play().catch(() => {});
-      });
-      return () => hls.destroy();
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = videoSrc;
-      video.addEventListener("loadedmetadata", () => {
-        video.play().catch(() => {});
-      });
-    }
   }, []);
 
   const loadData = async () => {
@@ -175,18 +152,8 @@ export default function HomePage() {
       `}</style>
       {/* HERO SECTION */}
       <section className="relative w-full min-h-screen md:min-h-[100vh] flex items-center justify-center overflow-hidden pt-20 md:pt-32 bg-background">
-        {/* Video Background Layer */}
-        <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover opacity-60 z-0"
-          muted
-          loop
-          playsInline
-          poster="https://images.unsplash.com/photo-1647356191320-d7a1f80ca777?w=1600&h=900&fit=crop"
-        />
-
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-1" />
+        {/* Background Video Component */}
+        <BackgroundVideo />
 
         {/* Top-left Glow */}
         <div
