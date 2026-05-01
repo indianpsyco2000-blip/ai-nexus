@@ -24,14 +24,14 @@ export default function ToolsOrbit() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
-  const [clickedId, setClickedId] = useState<string | null>(null);
+  const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width / 2) / 50;
-        const y = (e.clientY - rect.top - rect.height / 2) / 50;
+        const x = (e.clientX - rect.left - rect.width / 2) / 100;
+        const y = (e.clientY - rect.top - rect.height / 2) / 100;
         setMousePosition({ x, y });
       }
     };
@@ -40,20 +40,55 @@ export default function ToolsOrbit() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const handleIconClick = (id: string) => {
-    setClickedId(id);
-    setTimeout(() => setClickedId(null), 600);
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotation(prev => (prev + 0.5) % 360);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
 
-  const orbitRadius = 200;
   const angleSlice = (360 / tools.length) * (Math.PI / 180);
 
   return (
     <section className="relative w-full py-32 px-6 overflow-hidden bg-gradient-to-b from-background via-background/80 to-background">
-      {/* Background Elements */}
+      <style>{`
+        @keyframes float-pulse {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+        }
+        
+        @keyframes glow-pulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.6; }
+        }
+        
+        .float-animation {
+          animation: float-pulse 3s ease-in-out infinite;
+        }
+        
+        .glow-pulse-animation {
+          animation: glow-pulse 2s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-accent/10 via-highlight/10 to-transparent rounded-full blur-3xl opacity-30" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-b from-highlight/5 to-transparent rounded-full blur-2xl opacity-20" />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-accent/15 via-highlight/15 to-accent/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-b from-highlight/10 to-transparent rounded-full blur-2xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.15, 0.3, 0.15],
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        />
       </div>
 
       <div className="max-w-[120rem] mx-auto relative z-10">
@@ -66,9 +101,17 @@ export default function ToolsOrbit() {
           className="text-center mb-20"
         >
           <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-12 h-[1px] bg-highlight" />
+            <motion.div
+              className="w-12 h-[1px] bg-highlight"
+              animate={{ scaleX: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
             <span className="font-mono text-sm text-highlight uppercase tracking-widest">Integrated Ecosystem</span>
-            <div className="w-12 h-[1px] bg-highlight" />
+            <motion.div
+              className="w-12 h-[1px] bg-highlight"
+              animate={{ scaleX: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+            />
           </div>
           <h2 className="font-heading text-4xl md:text-6xl font-bold uppercase mb-4">
             Tools & Platforms
@@ -78,133 +121,199 @@ export default function ToolsOrbit() {
           </p>
         </motion.div>
 
-        {/* Orbit Container */}
-        <div className="flex items-center justify-center min-h-[600px]">
+        {/* Main Container */}
+        <div className="flex items-center justify-center min-h-[700px]">
           <motion.div
             ref={containerRef}
-            className="relative w-full max-w-[600px] aspect-square"
+            className="relative w-full max-w-[700px] aspect-square"
             style={{
-              perspective: '1000px',
+              perspective: '1200px',
             }}
             animate={{
-              rotateX: mousePosition.y * 0.5,
-              rotateY: mousePosition.x * 0.5,
+              rotateX: mousePosition.y * 0.3,
+              rotateY: mousePosition.x * 0.3,
             }}
-            transition={{ type: 'spring', stiffness: 100, damping: 30 }}
+            transition={{ type: 'spring', stiffness: 80, damping: 25 }}
           >
-            {/* Central Core */}
-            <motion.div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
-              animate={{
-                scale: [1, 1.1, 1],
-                boxShadow: [
-                  '0 0 20px rgba(50, 224, 196, 0.5)',
-                  '0 0 40px rgba(50, 224, 196, 0.8)',
-                  '0 0 20px rgba(50, 224, 196, 0.5)',
-                ],
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-highlight to-accent flex items-center justify-center border-2 border-highlight/50 shadow-2xl">
-                <Sparkles className="w-12 h-12 text-primary animate-pulse" />
-              </div>
-            </motion.div>
-
-            {/* Orbital Path (Visual Guide) */}
-            <svg
-              className="absolute inset-0 w-full h-full opacity-20"
-              viewBox="0 0 600 600"
-            >
-              <circle
-                cx="300"
-                cy="300"
-                r={orbitRadius}
+            {/* Animated Rings */}
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 700 700">
+              {/* Outer Ring */}
+              <motion.circle
+                cx="350"
+                cy="350"
+                r="280"
                 fill="none"
-                stroke="rgba(50, 224, 196, 0.2)"
+                stroke="rgba(50, 224, 196, 0.15)"
+                strokeWidth="1"
+                animate={{ strokeDashoffset: [0, -100] }}
+                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                strokeDasharray="10,5"
+              />
+              {/* Middle Ring */}
+              <motion.circle
+                cx="350"
+                cy="350"
+                r="200"
+                fill="none"
+                stroke="rgba(28, 130, 227, 0.1)"
+                strokeWidth="1"
+                animate={{ strokeDashoffset: [0, 100] }}
+                transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                strokeDasharray="10,5"
+              />
+              {/* Inner Ring */}
+              <circle
+                cx="350"
+                cy="350"
+                r="120"
+                fill="none"
+                stroke="rgba(50, 224, 196, 0.08)"
                 strokeWidth="1"
                 strokeDasharray="5,5"
               />
             </svg>
 
-            {/* Orbiting Icons */}
+            {/* Central Core - Enhanced */}
+            <motion.div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
+              animate={{
+                scale: [1, 1.15, 1],
+              }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <motion.div
+                className="relative"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+              >
+                <div className="absolute inset-0 w-32 h-32 rounded-full bg-gradient-to-r from-highlight/30 to-accent/30 blur-xl" />
+              </motion.div>
+              <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-highlight to-accent flex items-center justify-center border-2 border-highlight/60">
+                <motion.div
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                >
+                  <Sparkles className="w-14 h-14 text-primary" />
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Orbiting Icons - Fluid Motion */}
             {tools.map((tool, index) => {
-              const angle = angleSlice * index;
-              const x = Math.cos(angle) * orbitRadius;
-              const y = Math.sin(angle) * orbitRadius;
+              const angle = angleSlice * index + (rotation * Math.PI / 180);
+              const radius = 240;
+              const x = Math.cos(angle) * radius;
+              const y = Math.sin(angle) * radius;
               const isHovered = hoveredId === tool.id;
-              const isClicked = clickedId === tool.id;
 
               return (
                 <motion.div
                   key={tool.id}
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                   animate={{
-                    x: isHovered ? x * 1.2 : x,
-                    y: isHovered ? y * 1.2 : y,
-                    rotate: isHovered ? 0 : 360,
+                    x: isHovered ? x * 1.3 : x,
+                    y: isHovered ? y * 1.3 : y,
                   }}
                   transition={{
-                    rotate: {
-                      duration: 20,
-                      repeat: Infinity,
-                      ease: 'linear',
-                    },
-                    x: { type: 'spring', stiffness: 300, damping: 30 },
-                    y: { type: 'spring', stiffness: 300, damping: 30 },
+                    x: { type: 'spring', stiffness: 200, damping: 25 },
+                    y: { type: 'spring', stiffness: 200, damping: 25 },
                   }}
                   onMouseEnter={() => setHoveredId(tool.id)}
                   onMouseLeave={() => setHoveredId(null)}
-                  onClick={() => handleIconClick(tool.id)}
                   className="cursor-pointer"
                 >
-                  {/* Glow Effect */}
+                  {/* Connection Line to Center */}
+                  {isHovered && (
+                    <motion.svg
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                      width="500"
+                      height="500"
+                      viewBox="0 0 500 500"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <motion.line
+                        x1="250"
+                        y1="250"
+                        x2={250 + x / 2}
+                        y2={250 + y / 2}
+                        stroke={tool.color}
+                        strokeWidth="1.5"
+                        opacity="0.4"
+                        animate={{ strokeDashoffset: [0, -20] }}
+                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                        strokeDasharray="5,5"
+                      />
+                    </motion.svg>
+                  )}
+
+                  {/* Outer Glow Ring */}
                   <motion.div
                     className="absolute inset-0 rounded-full"
                     animate={{
                       boxShadow: isHovered
-                        ? `0 0 30px ${tool.color}80, 0 0 60px ${tool.color}40`
-                        : `0 0 10px ${tool.color}40`,
-                      scale: isHovered ? 1.5 : 1,
+                        ? `0 0 40px ${tool.color}90, 0 0 80px ${tool.color}50, inset 0 0 20px ${tool.color}30`
+                        : `0 0 15px ${tool.color}40`,
+                      scale: isHovered ? 1.8 : 1.2,
                     }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
                   />
 
                   {/* Icon Container */}
                   <motion.div
-                    className="relative w-16 h-16 rounded-full bg-background/80 backdrop-blur-md border-2 flex items-center justify-center transition-all duration-300"
+                    className="relative w-20 h-20 rounded-full bg-gradient-to-br from-background/90 to-background/70 backdrop-blur-lg border-2 flex items-center justify-center overflow-hidden"
                     style={{
                       borderColor: tool.color,
                     }}
                     animate={{
-                      scale: isHovered ? 1.3 : isClicked ? 1.2 : 1,
-                      borderColor: isHovered ? tool.color : `${tool.color}60`,
+                      scale: isHovered ? 1.4 : 1,
+                      borderColor: isHovered ? tool.color : `${tool.color}50`,
+                      background: isHovered
+                        ? `linear-gradient(135deg, ${tool.color}15, ${tool.color}05)`
+                        : 'linear-gradient(135deg, rgba(11, 19, 43, 0.9), rgba(11, 19, 43, 0.7))',
                     }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   >
+                    {/* Background Shimmer */}
+                    {isHovered && (
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                        animate={{ x: [-100, 100] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      />
+                    )}
+
                     <motion.div
                       animate={{
-                        scale: isClicked ? [1, 1.3, 1] : 1,
+                        scale: isHovered ? [1, 1.2, 1] : 1,
+                        rotate: isHovered ? 360 : 0,
                       }}
-                      transition={{ duration: 0.6 }}
+                      transition={{
+                        scale: { duration: 0.6, repeat: isHovered ? Infinity : 0 },
+                        rotate: { duration: 0.8 },
+                      }}
+                      className="relative z-10"
                     >
                       <tool.icon
-                        className="w-8 h-8 transition-colors duration-300"
+                        className="w-10 h-10 transition-colors duration-300"
                         style={{ color: tool.color }}
                       />
                     </motion.div>
                   </motion.div>
 
-                  {/* Tooltip */}
+                  {/* Enhanced Tooltip */}
                   <motion.div
-                    className="absolute top-full mt-3 left-1/2 -translate-x-1/2 whitespace-nowrap"
+                    className="absolute top-full mt-4 left-1/2 -translate-x-1/2 whitespace-nowrap"
                     animate={{
                       opacity: isHovered ? 1 : 0,
-                      y: isHovered ? 0 : -10,
+                      y: isHovered ? 0 : -15,
+                      scale: isHovered ? 1 : 0.8,
                     }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
                     pointerEvents="none"
                   >
-                    <div className="px-3 py-1.5 bg-background/90 backdrop-blur-md border border-foreground/20 rounded-full text-xs font-mono text-foreground whitespace-nowrap shadow-lg">
+                    <div className="px-4 py-2 bg-gradient-to-r from-background/95 to-background/85 backdrop-blur-lg border border-foreground/30 rounded-lg text-xs font-mono text-foreground whitespace-nowrap shadow-2xl">
                       {tool.name}
                     </div>
                   </motion.div>
@@ -223,11 +332,11 @@ export default function ToolsOrbit() {
           className="text-center mt-20"
         >
           <p className="font-paragraph text-foreground/60 text-lg mb-6">
-            Hover over icons to explore integrations • Click for more details
+            Hover over icons to explore integrations
           </p>
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
             className="inline-block"
           >
             <Rocket className="w-6 h-6 text-highlight" />
