@@ -1,5 +1,5 @@
 // HPI 1.7-G
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Brain, Zap, Code, ArrowRight, TrendingUp, Award, Cpu, Network, Database, ChevronRight, Terminal, Activity, Menu, X } from 'lucide-react';
@@ -16,7 +16,6 @@ export default function HomePage() {
   const [industries, setIndustries] = useState<Industries[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 150]);
@@ -24,33 +23,7 @@ export default function HomePage() {
 
   useEffect(() => {
     loadData();
-    initializeHLS();
   }, []);
-
-  const initializeHLS = async () => {
-    if (!videoRef.current) return;
-    
-    try {
-      const HLS = (await import('hls.js')).default;
-      if (HLS.isSupported()) {
-        const hls = new HLS({ enableWorker: false });
-        hls.loadSource('https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8');
-        hls.attachMedia(videoRef.current);
-        hls.on(HLS.Events.MANIFEST_PARSED, () => {
-          videoRef.current?.play().catch(() => {
-            // Autoplay failed, user interaction may be required
-          });
-        });
-      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-        videoRef.current.src = 'https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8';
-        videoRef.current.play().catch(() => {
-          // Autoplay failed, user interaction may be required
-        });
-      }
-    } catch (error) {
-      console.error('HLS initialization error:', error);
-    }
-  };
 
   const loadData = async () => {
     setIsLoading(true);
@@ -178,34 +151,43 @@ export default function HomePage() {
       `}</style>
       {/* HERO SECTION */}
       <section className="relative w-full min-h-screen md:min-h-[100vh] flex items-center justify-center overflow-hidden pt-20 md:pt-32 bg-background">
-        {/* Background Video */}
-        <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover opacity-60 z-0"
-          muted
-          loop
-          playsInline
-          preload="auto"
+        {/* Animated Background Gradient */}
+        <motion.div
+          className="absolute inset-0 z-0"
+          animate={{
+            background: [
+              'radial-gradient(ellipse at 20% 50%, rgba(94, 210, 156, 0.15) 0%, transparent 50%)',
+              'radial-gradient(ellipse at 80% 50%, rgba(28, 130, 227, 0.12) 0%, transparent 50%)',
+              'radial-gradient(ellipse at 50% 80%, rgba(94, 210, 156, 0.1) 0%, transparent 50%)',
+              'radial-gradient(ellipse at 20% 50%, rgba(94, 210, 156, 0.15) 0%, transparent 50%)',
+            ]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
         />
 
-        {/* Video Overlays */}
-        <div className="absolute inset-0 z-1">
-          {/* Left Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#070b0a] via-[#070b0a]/50 to-transparent" />
-          
-          {/* Bottom Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 z-1 opacity-30">
+          <div className="tech-grid w-full h-full" />
         </div>
 
-        {/* Vertical Grid Lines - Desktop Only */}
-        <div className="hidden lg:block hero-grid-lines z-2">
-          <div className="grid-line" style={{ left: '25%' }} />
-          <div className="grid-line" style={{ left: '50%' }} />
-          <div className="grid-line" style={{ left: '75%' }} />
-        </div>
-
-        {/* Central Glow */}
-        <div className="central-glow z-2" />
+        {/* Floating Accent Elements */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-highlight/5 to-accent/5 blur-3xl"
+          animate={{
+            x: [0, 30, -30, 0],
+            y: [0, -40, 40, 0],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-gradient-to-l from-accent/5 to-highlight/5 blur-3xl"
+          animate={{
+            x: [0, -40, 40, 0],
+            y: [0, 30, -30, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        />
 
         <motion.div 
           style={{ y: heroY, opacity: heroOpacity }}
