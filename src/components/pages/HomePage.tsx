@@ -227,88 +227,94 @@ export default function HomePage() {
                   s.category?.toLowerCase().includes(item.keyword.toLowerCase())
                 );
                 
+                const navigateTo = matchingService ? `/service/${matchingService._id}` : '/services';
+                
                 return (
-                  <motion.div
+                  <Link
                     key={idx}
-                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ 
-                      duration: 0.6, 
-                      delay: item.delay,
-                      ease: [0.16, 1, 0.3, 1]
-                    }}
-                    className="group relative glass-panel p-6 md:p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-highlight/50 neon-glow cursor-pointer overflow-hidden"
-                    onClick={() => matchingService && (window.location.href = `/service/${matchingService._id}`)}
+                    to={navigateTo}
+                    className="group relative glass-panel p-6 md:p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-highlight/50 neon-glow cursor-pointer overflow-hidden no-underline block"
                   >
-                    {/* Animated background glow on hover */}
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-br from-highlight/20 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
-                      initial={{ scale: 0 }}
-                      whileHover={{ scale: 1 }}
-                      transition={{ duration: 0.5 }}
-                    />
-                    
-                    {/* Top border animation */}
-                    <motion.div 
-                      className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-highlight to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" 
-                    />
-                    
-                    {/* Icon container with enhanced animation */}
-                    <motion.div 
-                      className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-all duration-500 neon-glow relative overflow-hidden"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.8 }}
+                    <motion.div
+                      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ 
+                        duration: 0.6, 
+                        delay: item.delay,
+                        ease: [0.16, 1, 0.3, 1]
+                      }}
+                      className="w-full"
                     >
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-br from-highlight/30 to-transparent opacity-0 group-hover:opacity-100"
+                      {/* Animated background glow on hover */}
+                      <motion.div 
+                        className="absolute inset-0 bg-gradient-to-br from-highlight/20 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
                         initial={{ scale: 0 }}
-                        whileHover={{ scale: 1.5 }}
+                        whileHover={{ scale: 1 }}
                         transition={{ duration: 0.5 }}
                       />
-                      <motion.div
-                        whileHover={{ scale: 1.2, rotate: -20 }}
-                        transition={{ duration: 0.3 }}
+                      
+                      {/* Top border animation */}
+                      <motion.div 
+                        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-highlight to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" 
+                      />
+                      
+                      {/* Icon container with enhanced animation */}
+                      <motion.div 
+                        className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-all duration-500 neon-glow relative overflow-hidden"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.8 }}
                       >
-                        <item.icon className="w-6 h-6 md:w-7 md:h-7 text-highlight group-hover:text-highlight transition-colors duration-500 relative z-10" />
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-br from-highlight/30 to-transparent opacity-0 group-hover:opacity-100"
+                          initial={{ scale: 0 }}
+                          whileHover={{ scale: 1.5 }}
+                          transition={{ duration: 0.5 }}
+                        />
+                        <motion.div
+                          whileHover={{ scale: 1.2, rotate: -20 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <item.icon className="w-6 h-6 md:w-7 md:h-7 text-highlight group-hover:text-highlight transition-colors duration-500 relative z-10" />
+                        </motion.div>
                       </motion.div>
-                    </motion.div>
-                    
-                    <h3 className="font-heading text-lg md:text-xl font-bold uppercase mb-3 tracking-wide group-hover:text-highlight transition-colors duration-300">{item.title}</h3>
-                    <p className="text-foreground/60 text-xs md:text-sm leading-relaxed font-light group-hover:text-foreground/80 transition-colors duration-300">{item.desc}</p>
-                    
-                    {/* Animated CTA */}
-                    <motion.div 
-                      className="mt-6 flex items-center gap-2 text-xs font-mono text-highlight opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      initial={{ x: -10 }}
-                      whileHover={{ x: 0 }}
-                    >
-                      <span>Initialize</span>
-                      <motion.div
-                        whileHover={{ x: 4 }}
-                        transition={{ duration: 0.2 }}
+                      
+                      <h3 className="font-heading text-lg md:text-xl font-bold uppercase mb-3 tracking-wide group-hover:text-highlight transition-colors duration-300">{item.title}</h3>
+                      <p className="text-foreground/60 text-xs md:text-sm leading-relaxed font-light group-hover:text-foreground/80 transition-colors duration-300">{item.desc}</p>
+                      
+                      {/* Animated CTA */}
+                      <motion.div 
+                        className="mt-6 flex items-center gap-2 text-xs font-mono text-highlight opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        initial={{ x: -10 }}
+                        whileHover={{ x: 0 }}
                       >
-                        <ArrowRight className="w-3 h-3" />
+                        <span>Initialize</span>
+                        <motion.div
+                          whileHover={{ x: 4 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ArrowRight className="w-3 h-3" />
+                        </motion.div>
                       </motion.div>
-                    </motion.div>
 
-                    {/* Pulse effect on hover */}
-                    <motion.div
-                      className="absolute inset-0 border border-highlight/50 rounded-[12px] pointer-events-none"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      whileHover={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3 }}
-                      animate={{ 
-                        boxShadow: [
-                          "0 0 0 0 rgba(50, 224, 196, 0)",
-                          "0 0 0 8px rgba(50, 224, 196, 0.1)",
-                          "0 0 0 0 rgba(50, 224, 196, 0)"
-                        ]
-                      }}
-                      style={{ animationDuration: "2s" }}
-                    />
-                  </motion.div>
+                      {/* Pulse effect on hover */}
+                      <motion.div
+                        className="absolute inset-0 border border-highlight/50 rounded-[12px] pointer-events-none"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileHover={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3 }}
+                        animate={{ 
+                          boxShadow: [
+                            "0 0 0 0 rgba(50, 224, 196, 0)",
+                            "0 0 0 8px rgba(50, 224, 196, 0.1)",
+                            "0 0 0 0 rgba(50, 224, 196, 0)"
+                          ]
+                        }}
+                        style={{ animationDuration: "2s" }}
+                      />
+                    </motion.div>
+                  </Link>
                 );
               })}
             </div>
