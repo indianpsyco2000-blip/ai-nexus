@@ -178,10 +178,10 @@ export default function ToolsOrbit() {
         </motion.div>
 
         {/* Main Container - Responsive Layouts */}
-        <div className="flex items-center justify-center min-h-[320px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[600px]">
+        <div className="flex items-center justify-center min-h-[320px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[500px]">
           <div
             ref={containerRef}
-            className="relative w-full max-w-[320px] sm:max-w-[400px] md:max-w-[550px] lg:max-w-[700px] aspect-square"
+            className="relative w-full max-w-[320px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[550px] aspect-square"
           >
             {/* Mobile: Enhanced Carousel */}
             {screenSize === 'mobile' && (
@@ -309,12 +309,12 @@ export default function ToolsOrbit() {
             {screenSize === 'desktop' && (
               <>
                 {/* Animated Orbital Rings with Enhanced Visuals */}
-                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 700 700">
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 550 550">
                   {/* Outer ring - fast rotation */}
                   <motion.circle
-                    cx="350"
-                    cy="350"
-                    r="240"
+                    cx="275"
+                    cy="275"
+                    r="180"
                     fill="none"
                     stroke="rgba(50, 224, 196, 0.12)"
                     strokeWidth="2"
@@ -325,9 +325,9 @@ export default function ToolsOrbit() {
                   
                   {/* Middle ring - medium rotation */}
                   <motion.circle
-                    cx="350"
-                    cy="350"
-                    r="170"
+                    cx="275"
+                    cy="275"
+                    r="130"
                     fill="none"
                     stroke="rgba(28, 130, 227, 0.08)"
                     strokeWidth="1.5"
@@ -338,9 +338,9 @@ export default function ToolsOrbit() {
                   
                   {/* Inner ring - slow rotation */}
                   <motion.circle
-                    cx="350"
-                    cy="350"
-                    r="100"
+                    cx="275"
+                    cy="275"
+                    r="80"
                     fill="none"
                     stroke="rgba(50, 224, 196, 0.06)"
                     strokeWidth="1"
@@ -350,8 +350,8 @@ export default function ToolsOrbit() {
                   />
                   
                   {/* Decorative cross lines */}
-                  <line x1="350" y1="110" x2="350" y2="590" stroke="rgba(50, 224, 196, 0.04)" strokeWidth="1" />
-                  <line x1="110" y1="350" x2="590" y2="350" stroke="rgba(50, 224, 196, 0.04)" strokeWidth="1" />
+                  <line x1="275" y1="95" x2="275" y2="455" stroke="rgba(50, 224, 196, 0.04)" strokeWidth="1" />
+                  <line x1="95" y1="275" x2="455" y2="275" stroke="rgba(50, 224, 196, 0.04)" strokeWidth="1" />
                 </svg>
 
                 {/* Central Pulsing Core - Enhanced */}
@@ -363,7 +363,7 @@ export default function ToolsOrbit() {
                   transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
                 >
                   <motion.div 
-                    className="relative w-24 h-24 rounded-full bg-gradient-to-br from-highlight/50 to-accent/40 flex items-center justify-center border-2 border-highlight/60 shadow-2xl pulse-ring"
+                    className="relative w-20 h-20 rounded-full bg-gradient-to-br from-highlight/50 to-accent/40 flex items-center justify-center border-2 border-highlight/60 shadow-2xl pulse-ring"
                     style={{
                       boxShadow: '0 0 40px rgba(50, 224, 196, 0.4), inset 0 0 30px rgba(50, 224, 196, 0.15)',
                     }}
@@ -372,7 +372,7 @@ export default function ToolsOrbit() {
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                     >
-                      <Sparkles className="w-10 h-10 text-highlight" />
+                      <Sparkles className="w-9 h-9 text-highlight" />
                     </motion.div>
                   </motion.div>
                 </motion.div>
@@ -384,7 +384,7 @@ export default function ToolsOrbit() {
                 >
                   {tools.map((tool, index) => {
                     const angle = (360 / tools.length) * index * (Math.PI / 180);
-                    const radius = 210;
+                    const radius = 160;
                     const x = Math.cos(angle) * radius;
                     const y = Math.sin(angle) * radius;
 
@@ -415,12 +415,12 @@ export default function ToolsOrbit() {
 
                         {/* Premium Icon Container */}
                         <motion.div
-                          className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-background/90 to-background/70 backdrop-blur-xl border-2 flex items-center justify-center overflow-hidden cursor-pointer shadow-2xl"
+                          className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-background/90 to-background/70 backdrop-blur-xl border-2 flex items-center justify-center overflow-hidden cursor-pointer shadow-2xl"
                           style={{
                             borderColor: tool.color,
                           }}
                           animate={{
-                            scale: hoveredId === tool.id ? 1.4 : 1,
+                            scale: hoveredId === tool.id ? 1.35 : 1,
                             borderColor: hoveredId === tool.id ? tool.color : `${tool.color}60`,
                             boxShadow: hoveredId === tool.id
                               ? `0 0 50px ${tool.color}70, inset 0 0 25px ${tool.color}25, 0 20px 40px rgba(0,0,0,0.3)`
@@ -445,7 +445,7 @@ export default function ToolsOrbit() {
                             className="relative z-10"
                           >
                             <tool.icon
-                              className="w-9 h-9 transition-colors duration-300"
+                              className="w-8 h-8 transition-colors duration-300"
                               style={{ color: tool.color }}
                             />
                           </motion.div>
@@ -453,7 +453,7 @@ export default function ToolsOrbit() {
 
                         {/* Enhanced Tooltip */}
                         <motion.div
-                          className="absolute top-full mt-6 left-1/2 -translate-x-1/2 whitespace-nowrap"
+                          className="absolute top-full mt-5 left-1/2 -translate-x-1/2 whitespace-nowrap"
                           animate={{
                             opacity: hoveredId === tool.id ? 1 : 0,
                             y: hoveredId === tool.id ? 0 : -12,
