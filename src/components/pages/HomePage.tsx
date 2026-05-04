@@ -193,29 +193,29 @@ export default function HomePage() {
       {/* TOOLS ORBIT SECTION */}
       <ToolsOrbit />
       {/* WHAT WE DO - Static Architecture */}
-      <section className="relative w-full py-32 px-6 border-t border-white/5">
+      <section className="relative w-full py-16 md:py-32 px-4 md:px-6 border-t border-white/5">
         <div className="max-w-[120rem] mx-auto">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={containerVariants}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start"
           >
             <div className="lg:col-span-4 lg:sticky lg:top-32">
               <motion.div variants={itemVariants} className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-[1px] bg-highlight" />
-                <span className="font-mono text-sm text-highlight uppercase tracking-widest">Core Protocols</span>
+                <span className="font-mono text-xs md:text-sm text-highlight uppercase tracking-widest">Core Protocols</span>
               </motion.div>
-              <motion.h2 variants={itemVariants} className="font-heading text-4xl md:text-6xl font-bold uppercase leading-tight mb-6">
+              <motion.h2 variants={itemVariants} className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase leading-tight mb-6">
                 System <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-highlight">Capabilities</span>
               </motion.h2>
-              <motion.p variants={itemVariants} className="text-foreground/60 text-lg leading-relaxed">
+              <motion.p variants={itemVariants} className="text-foreground/60 text-base md:text-lg leading-relaxed">
                 We engineer intelligent systems designed to eliminate friction, accelerate processes, and unlock unprecedented operational efficiency.
               </motion.p>
             </div>
 
-            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
               {[
                 { icon: Cpu, title: 'AI Agents', desc: 'Autonomous digital entities capable of complex reasoning, learning, and task execution.', delay: 0, keyword: 'AI' },
                 { icon: Network, title: 'Workflow Automation', desc: 'Seamless integration of disparate systems to create frictionless operational pipelines.', delay: 0.1, keyword: 'Workflow' },
@@ -230,23 +230,84 @@ export default function HomePage() {
                 return (
                   <motion.div
                     key={idx}
-                    variants={itemVariants}
-                    className="group relative glass-panel p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-highlight/50 neon-glow cursor-pointer"
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: item.delay,
+                      ease: [0.16, 1, 0.3, 1]
+                    }}
+                    className="group relative glass-panel p-6 md:p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-highlight/50 neon-glow cursor-pointer overflow-hidden"
                     onClick={() => matchingService && (window.location.href = `/service/${matchingService._id}`)}
                   >
-                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-highlight/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+                    {/* Animated background glow on hover */}
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-br from-highlight/20 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
+                      initial={{ scale: 0 }}
+                      whileHover={{ scale: 1 }}
+                      transition={{ duration: 0.5 }}
+                    />
                     
-                    <div className="w-14 h-14 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-colors duration-500 neon-glow">
-                      <item.icon className="w-6 h-6 text-highlight group-hover:text-highlight transition-colors duration-500" />
-                    </div>
+                    {/* Top border animation */}
+                    <motion.div 
+                      className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-highlight to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" 
+                    />
                     
-                    <h3 className="font-heading text-xl font-bold uppercase mb-3 tracking-wide">{item.title}</h3>
-                    <p className="text-foreground/60 text-sm leading-relaxed font-light">{item.desc}</p>
+                    {/* Icon container with enhanced animation */}
+                    <motion.div 
+                      className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-all duration-500 neon-glow relative overflow-hidden"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.8 }}
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-br from-highlight/30 to-transparent opacity-0 group-hover:opacity-100"
+                        initial={{ scale: 0 }}
+                        whileHover={{ scale: 1.5 }}
+                        transition={{ duration: 0.5 }}
+                      />
+                      <motion.div
+                        whileHover={{ scale: 1.2, rotate: -20 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <item.icon className="w-6 h-6 md:w-7 md:h-7 text-highlight group-hover:text-highlight transition-colors duration-500 relative z-10" />
+                      </motion.div>
+                    </motion.div>
                     
-                    <div className="mt-6 flex items-center gap-2 text-xs font-mono text-highlight opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <h3 className="font-heading text-lg md:text-xl font-bold uppercase mb-3 tracking-wide group-hover:text-highlight transition-colors duration-300">{item.title}</h3>
+                    <p className="text-foreground/60 text-xs md:text-sm leading-relaxed font-light group-hover:text-foreground/80 transition-colors duration-300">{item.desc}</p>
+                    
+                    {/* Animated CTA */}
+                    <motion.div 
+                      className="mt-6 flex items-center gap-2 text-xs font-mono text-highlight opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      initial={{ x: -10 }}
+                      whileHover={{ x: 0 }}
+                    >
                       <span>Initialize</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </div>
+                      <motion.div
+                        whileHover={{ x: 4 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ArrowRight className="w-3 h-3" />
+                      </motion.div>
+                    </motion.div>
+
+                    {/* Pulse effect on hover */}
+                    <motion.div
+                      className="absolute inset-0 border border-highlight/50 rounded-[12px] pointer-events-none"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileHover={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      animate={{ 
+                        boxShadow: [
+                          "0 0 0 0 rgba(50, 224, 196, 0)",
+                          "0 0 0 8px rgba(50, 224, 196, 0.1)",
+                          "0 0 0 0 rgba(50, 224, 196, 0)"
+                        ]
+                      }}
+                      style={{ animationDuration: "2s" }}
+                    />
                   </motion.div>
                 );
               })}
@@ -255,17 +316,17 @@ export default function HomePage() {
         </div>
       </section>
       {/* SERVICES OVERVIEW - Dynamic Data */}
-      <section className="relative w-full py-32 px-6 bg-black/20">
+      <section className="relative w-full py-16 md:py-32 px-4 md:px-6 bg-black/20">
         <div className="max-w-[120rem] mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-8">
             <div>
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-[1px] bg-accent" />
-                <span className="font-mono text-sm text-accent uppercase tracking-widest">Service Modules</span>
+                <span className="font-mono text-xs md:text-sm text-accent uppercase tracking-widest">Service Modules</span>
               </div>
-              <h2 className="font-heading text-4xl md:text-6xl font-bold uppercase">Deployed Solutions</h2>
+              <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase">Deployed Solutions</h2>
             </div>
-            <Link to="/services" className="group flex items-center gap-3 text-sm font-mono uppercase tracking-widest text-foreground/60 hover:text-highlight transition-colors">
+            <Link to="/services" className="group flex items-center gap-3 text-xs md:text-sm font-mono uppercase tracking-widest text-foreground/60 hover:text-highlight transition-colors">
               View All Modules
               <div className="w-8 h-8 rounded-full border border-foreground/20 flex items-center justify-center group-hover:border-highlight transition-colors">
                 <ArrowRight className="w-4 h-4" />
@@ -281,7 +342,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
               {services.map((service, idx) => (
                 <motion.div
                   key={service._id}
@@ -289,7 +350,7 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="group relative h-[450px] glass-panel overflow-hidden clip-diagonal"
+                  className="group relative h-[350px] md:h-[450px] glass-panel overflow-hidden clip-diagonal"
                 >
                   {service.serviceImage && (
                     <div className="absolute inset-0 z-0">
@@ -303,16 +364,16 @@ export default function HomePage() {
                     </div>
                   )}
                   
-                  <div className="relative z-10 h-full p-8 flex flex-col justify-end">
+                  <div className="relative z-10 h-full p-6 md:p-8 flex flex-col justify-end">
                     {service.category && (
-                      <span className="absolute top-8 left-8 px-3 py-1 bg-accent/20 border border-accent/30 text-accent text-xs font-mono uppercase tracking-widest backdrop-blur-md">
+                      <span className="absolute top-6 md:top-8 left-6 md:left-8 px-3 py-1 bg-accent/20 border border-accent/30 text-accent text-xs font-mono uppercase tracking-widest backdrop-blur-md">
                         {service.category}
                       </span>
                     )}
                     
                     <div className="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-                      <h3 className="font-heading text-2xl font-bold uppercase mb-4 leading-tight">{service.serviceName}</h3>
-                      <p className="text-foreground/70 text-sm line-clamp-2 mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                      <h3 className="font-heading text-xl md:text-2xl font-bold uppercase mb-4 leading-tight">{service.serviceName}</h3>
+                      <p className="text-foreground/70 text-xs md:text-sm line-clamp-2 mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                         {service.shortDescription}
                       </p>
                       <Link to="/services" className="inline-flex items-center gap-2 text-highlight font-mono text-xs uppercase tracking-widest">
@@ -327,21 +388,21 @@ export default function HomePage() {
         </div>
       </section>
       {/* INDUSTRIES - Sticky Scroll Narrative */}
-      <section className="relative w-full py-32 px-6">
+      <section className="relative w-full py-16 md:py-32 px-4 md:px-6">
         <div className="max-w-[120rem] mx-auto">
-          <div className="flex flex-col lg:flex-row gap-16">
+          <div className="flex flex-col lg:flex-row gap-8 md:gap-16">
             
             {/* Sticky Left Column */}
             <div className="w-full lg:w-1/3">
               <div className="sticky top-32">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-[1px] bg-highlight" />
-                  <span className="font-mono text-sm text-highlight uppercase tracking-widest">Target Sectors</span>
+                  <span className="font-mono text-xs md:text-sm text-highlight uppercase tracking-widest">Target Sectors</span>
                 </div>
-                <h2 className="font-heading text-4xl md:text-6xl font-bold uppercase mb-6">
+                <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase mb-6">
                   Industries <br/>We Serve
                 </h2>
-                <p className="text-foreground/60 text-lg mb-8">
+                <p className="text-foreground/60 text-base md:text-lg mb-8">
                   Our AI and automation architectures are highly adaptable, providing transformative solutions across diverse operational landscapes.
                 </p>
                 <div className="hidden lg:block w-full h-[1px] bg-gradient-to-r from-white/10 to-transparent" />
@@ -354,7 +415,7 @@ export default function HomePage() {
                 <div className="w-8 h-8 border-2 border-highlight/20 border-t-highlight rounded-full animate-spin" />
               </div>
 
-              <div className={`flex flex-col gap-8 transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+              <div className={`flex flex-col gap-6 md:gap-8 transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
                 {industries.map((industry, idx) => (
                   <motion.div
                     key={industry._id}
@@ -362,7 +423,7 @@ export default function HomePage() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className="group flex flex-col md:flex-row gap-8 glass-panel p-6 md:p-8 clip-diagonal hover:bg-white/[0.02] transition-colors"
+                    className="group flex flex-col md:flex-row gap-6 md:gap-8 glass-panel p-6 md:p-8 clip-diagonal hover:bg-white/[0.02] transition-colors"
                   >
                     {industry.industryImage && (
                       <div className="w-full md:w-1/3 h-48 md:h-auto relative overflow-hidden rounded-sm">
@@ -376,8 +437,8 @@ export default function HomePage() {
                       </div>
                     )}
                     <div className="w-full md:w-2/3 flex flex-col justify-center">
-                      <h3 className="font-heading text-2xl font-bold uppercase mb-4 text-highlight">{industry.industryName}</h3>
-                      <p className="text-foreground/70 text-sm leading-relaxed mb-6">
+                      <h3 className="font-heading text-xl md:text-2xl font-bold uppercase mb-4 text-highlight">{industry.industryName}</h3>
+                      <p className="text-foreground/70 text-xs md:text-sm leading-relaxed mb-6">
                         {industry.shortSummary}
                       </p>
                       <Link to="/industries" className="mt-auto inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-foreground/50 hover:text-foreground transition-colors w-fit">
@@ -393,22 +454,22 @@ export default function HomePage() {
         </div>
       </section>
       {/* CASE STUDIES - Horizontal Scroll / Parallax Cards */}
-      <section className="relative w-full py-32 bg-black/40 border-y border-white/5 overflow-hidden">
-        <div className="max-w-[120rem] mx-auto px-6 mb-16 text-center">
+      <section className="relative w-full py-16 md:py-32 bg-black/40 border-y border-white/5 overflow-hidden">
+        <div className="max-w-[120rem] mx-auto px-4 md:px-6 mb-12 md:mb-16 text-center">
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="w-8 h-[1px] bg-accent" />
-            <span className="font-mono text-sm text-accent uppercase tracking-widest">Proof of Concept</span>
+            <span className="font-mono text-xs md:text-sm text-accent uppercase tracking-widest">Proof of Concept</span>
             <div className="w-8 h-[1px] bg-accent" />
           </div>
-          <h2 className="font-heading text-4xl md:text-6xl font-bold uppercase">Success Architecture</h2>
+          <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase">Success Architecture</h2>
         </div>
 
-        <div className="relative w-full max-w-[120rem] mx-auto px-6 min-h-[500px]">
+        <div className="relative w-full max-w-[120rem] mx-auto px-4 md:px-6 min-h-[500px]">
            <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${isLoading ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none'}`}>
-              <span className="font-mono text-sm text-foreground/50 uppercase tracking-widest animate-pulse">Loading Case Files...</span>
+              <span className="font-mono text-xs md:text-sm text-foreground/50 uppercase tracking-widest animate-pulse">Loading Case Files...</span>
             </div>
 
-          <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
             {caseStudies.map((study, idx) => (
               <motion.div
                 key={study._id}
@@ -416,7 +477,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.8, delay: idx * 0.2 }}
-                className="group relative glass-panel p-8 flex flex-col h-full border-t-4 border-t-transparent hover:border-t-highlight transition-all duration-300"
+                className="group relative glass-panel p-6 md:p-8 flex flex-col h-full border-t-4 border-t-transparent hover:border-t-highlight transition-all duration-300"
               >
                 <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
                   <Terminal className="w-6 h-6 text-highlight" />
@@ -428,26 +489,26 @@ export default function HomePage() {
                   </span>
                 )}
                 
-                <h3 className="font-heading text-2xl font-bold uppercase mb-6 leading-tight">{study.title}</h3>
+                <h3 className="font-heading text-lg md:text-2xl font-bold uppercase mb-6 leading-tight">{study.title}</h3>
                 
                 <div className="space-y-4 mb-8 flex-grow">
                   <div>
                     <span className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest block mb-1">Problem Statement</span>
-                    <p className="text-sm text-foreground/80 line-clamp-2">{study.problem}</p>
+                    <p className="text-xs md:text-sm text-foreground/80 line-clamp-2">{study.problem}</p>
                   </div>
                   <div className="w-full h-[1px] bg-white/5" />
                   <div>
                     <span className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest block mb-1">Implemented Solution</span>
-                    <p className="text-sm text-foreground/80 line-clamp-2">{study.solution}</p>
+                    <p className="text-xs md:text-sm text-foreground/80 line-clamp-2">{study.solution}</p>
                   </div>
                 </div>
 
                 {study.roiMetrics && (
                   <div className="mt-auto bg-highlight/10 border border-highlight/20 p-4 flex items-center gap-4">
-                    <TrendingUp className="w-8 h-8 text-highlight" />
+                    <TrendingUp className="w-6 h-6 md:w-8 md:h-8 text-highlight flex-shrink-0" />
                     <div>
                       <span className="text-[10px] font-mono text-highlight uppercase tracking-widest block mb-1">ROI Metric</span>
-                      <span className="font-heading font-bold text-lg">{study.roiMetrics}</span>
+                      <span className="font-heading font-bold text-base md:text-lg">{study.roiMetrics}</span>
                     </div>
                   </div>
                 )}
@@ -457,7 +518,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* CTA BANNER - Immersive Glow */}
-      <section className="relative w-full py-40 px-6 overflow-hidden">
+      <section className="relative w-full py-20 md:py-40 px-4 md:px-6 overflow-hidden">
         <div className="absolute inset-0 tech-grid opacity-50 z-0" />
         
         <motion.div
@@ -465,7 +526,7 @@ export default function HomePage() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative z-10 max-w-[80rem] mx-auto glass-panel border-accent/30 p-12 md:p-24 text-center clip-diagonal overflow-hidden"
+          className="relative z-10 max-w-[80rem] mx-auto glass-panel border-accent/30 p-8 md:p-12 lg:p-24 text-center clip-diagonal overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-highlight/10" />
           
@@ -475,29 +536,29 @@ export default function HomePage() {
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          <h2 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold uppercase mb-6 tracking-tighter">
+          <h2 className="font-heading text-3xl md:text-5xl lg:text-7xl font-bold uppercase mb-6 tracking-tighter">
             Initiate Your <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-highlight to-accent glow-text">Transformation</span>
           </h2>
           
-          <p className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto mb-12 font-light">
+          <p className="text-base md:text-lg lg:text-xl text-foreground/80 max-w-2xl mx-auto mb-8 md:mb-12 font-light">
             Deploy intelligent systems today. Scale exponentially tomorrow. The future of your operations begins here.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
             <Link
               to="/contact"
-              className="group relative px-10 py-5 bg-foreground text-primary font-heading font-bold uppercase tracking-wider text-sm clip-diagonal overflow-hidden transition-all hover:scale-105"
+              className="group relative px-8 md:px-10 py-4 md:py-5 bg-foreground text-primary font-heading font-bold uppercase tracking-wider text-xs md:text-sm clip-diagonal overflow-hidden transition-all hover:scale-105 w-full sm:w-auto"
             >
               <div className="absolute inset-0 bg-highlight translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-              <span className="relative z-10 flex items-center gap-2 group-hover:text-primary">
+              <span className="relative z-10 flex items-center justify-center gap-2 group-hover:text-primary">
                 Commence Project
                 <ArrowRight className="w-4 h-4" />
               </span>
             </Link>
             <Link
               to="/pricing"
-              className="px-10 py-5 border border-foreground/30 text-foreground font-heading font-bold uppercase tracking-wider text-sm clip-diagonal transition-all hover:border-foreground hover:bg-white/5"
+              className="px-8 md:px-10 py-4 md:py-5 border border-foreground/30 text-foreground font-heading font-bold uppercase tracking-wider text-xs md:text-sm clip-diagonal transition-all hover:border-foreground hover:bg-white/5 w-full sm:w-auto text-center"
             >
               Review Parameters
             </Link>
