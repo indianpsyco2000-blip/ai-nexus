@@ -1,23 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, Code2, Zap, Brain, Cpu, Network, Database, Workflow, Sparkles, Rocket } from 'lucide-react';
+import { Github, Code2, Zap, Brain, Cpu, Network, Database, Workflow, Sparkles, Rocket, ArrowRight } from 'lucide-react';
 
 interface Tool {
   id: string;
   name: string;
   icon: React.ComponentType<{ className?: string }>;
   color: string;
+  description: string;
 }
 
 const tools: Tool[] = [
-  { id: '1', name: 'GitHub', icon: Github, color: '#32E0C4' },
-  { id: '2', name: 'n8n', icon: Workflow, color: '#1C82E3' },
-  { id: '3', name: 'Make.com', icon: Zap, color: '#FFB800' },
-  { id: '4', name: 'AI Agents', icon: Brain, color: '#8A2BE2' },
-  { id: '5', name: 'Automation', icon: Cpu, color: '#32E0C4' },
-  { id: '6', name: 'Integration', icon: Network, color: '#1C82E3' },
-  { id: '7', name: 'Data Flow', icon: Database, color: '#FF6B6B' },
-  { id: '8', name: 'API', icon: Code2, color: '#4ECDC4' },
+  { id: '1', name: 'GitHub', icon: Github, color: '#32E0C4', description: 'Version control & collaboration' },
+  { id: '2', name: 'n8n', icon: Workflow, color: '#1C82E3', description: 'Workflow automation platform' },
+  { id: '3', name: 'Make.com', icon: Zap, color: '#FFB800', description: 'Integration & automation' },
+  { id: '4', name: 'AI Agents', icon: Brain, color: '#8A2BE2', description: 'Intelligent automation' },
+  { id: '5', name: 'Automation', icon: Cpu, color: '#32E0C4', description: 'Process automation' },
+  { id: '6', name: 'Integration', icon: Network, color: '#1C82E3', description: 'System integration' },
+  { id: '7', name: 'Data Flow', icon: Database, color: '#FF6B6B', description: 'Data management' },
+  { id: '8', name: 'API', icon: Code2, color: '#4ECDC4', description: 'API connectivity' },
 ];
 
 export default function ToolsOrbit() {
@@ -39,7 +40,7 @@ export default function ToolsOrbit() {
   }, []);
 
   return (
-    <section className="relative w-full py-16 md:py-24 px-4 md:px-6 overflow-hidden bg-gradient-to-b from-background via-background/80 to-background">
+    <section className="relative w-full py-20 md:py-40 px-4 md:px-6 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
       <style>{`
         @keyframes orbit-rotate {
           0% { transform: rotate(0deg); }
@@ -53,110 +54,230 @@ export default function ToolsOrbit() {
         
         @keyframes float-up-down {
           0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
+          50% { transform: translateY(-12px); }
         }
         
-        @keyframes pulse-glow {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.8; }
+        @keyframes pulse-ring {
+          0% { 
+            box-shadow: 0 0 0 0 rgba(50, 224, 196, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 20px rgba(50, 224, 196, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(50, 224, 196, 0);
+          }
+        }
+        
+        @keyframes shimmer {
+          0% { background-position: -1000px 0; }
+          100% { background-position: 1000px 0; }
         }
         
         .orbit-container {
-          animation: orbit-rotate 40s linear infinite;
+          animation: orbit-rotate 50s linear infinite;
         }
         
         .orbit-container-reverse {
-          animation: orbit-rotate-reverse 50s linear infinite;
+          animation: orbit-rotate-reverse 60s linear infinite;
         }
         
         .float-item {
-          animation: float-up-down 3s ease-in-out infinite;
+          animation: float-up-down 4s ease-in-out infinite;
         }
         
-        .pulse-glow {
-          animation: pulse-glow 4s ease-in-out infinite;
+        .pulse-ring {
+          animation: pulse-ring 2s infinite;
+        }
+        
+        .shimmer-bg {
+          background-size: 1000px 100%;
+          animation: shimmer 3s infinite;
         }
       `}</style>
 
-      {/* Animated Background Glow */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* Multi-layer Background Glow */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Primary glow */}
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[500px] lg:w-[700px] h-[300px] md:h-[500px] lg:h-[700px] bg-gradient-to-r from-accent/8 via-highlight/8 to-accent/5 rounded-full blur-3xl"
+          className="absolute top-1/3 left-1/4 w-[400px] md:w-[600px] lg:w-[800px] h-[400px] md:h-[600px] lg:h-[800px] bg-gradient-to-r from-accent/15 via-highlight/10 to-transparent rounded-full blur-3xl"
           animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.15, 0.25, 0.15],
+            scale: [1, 1.15, 1],
+            opacity: [0.2, 0.35, 0.2],
+            x: [0, 50, 0],
           }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        
+        {/* Secondary glow */}
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-[350px] md:w-[550px] lg:w-[750px] h-[350px] md:h-[550px] lg:h-[750px] bg-gradient-to-l from-highlight/12 via-accent/8 to-transparent rounded-full blur-3xl"
+          animate={{
+            scale: [1.1, 1, 1.1],
+            opacity: [0.15, 0.3, 0.15],
+            x: [-50, 0, -50],
+          }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         />
       </div>
 
       <div className="max-w-[120rem] mx-auto relative z-10">
-        {/* Header */}
+        {/* Enhanced Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-16"
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16 md:mb-24"
         >
-          <div className="flex items-center justify-center gap-3 md:gap-4 mb-4">
+          <motion.div 
+            className="flex items-center justify-center gap-4 md:gap-6 mb-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
             <motion.div
-              className="w-6 md:w-8 h-[1px] bg-highlight"
-              animate={{ scaleX: [0.6, 1, 0.6] }}
+              className="h-[2px] bg-gradient-to-r from-transparent via-highlight to-transparent"
+              animate={{ scaleX: [0.5, 1, 0.5] }}
               transition={{ duration: 3, repeat: Infinity }}
+              style={{ width: '40px' }}
             />
-            <span className="font-mono text-xs md:text-sm text-highlight uppercase tracking-widest">Integrated Ecosystem</span>
+            <span className="font-mono text-xs md:text-sm text-highlight uppercase tracking-widest font-semibold">Integrated Ecosystem</span>
             <motion.div
-              className="w-6 md:w-8 h-[1px] bg-highlight"
-              animate={{ scaleX: [0.6, 1, 0.6] }}
+              className="h-[2px] bg-gradient-to-r from-transparent via-highlight to-transparent"
+              animate={{ scaleX: [0.5, 1, 0.5] }}
               transition={{ duration: 3, repeat: Infinity, delay: 0.3 }}
+              style={{ width: '40px' }}
             />
-          </div>
-          <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase mb-3">
-            Tools & Platforms
-          </h2>
-          <p className="font-paragraph text-foreground/60 text-sm md:text-base max-w-2xl mx-auto">
-            Seamlessly integrated with industry-leading automation and AI platforms
-          </p>
+          </motion.div>
+          
+          <motion.h2 
+            className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold uppercase mb-4 leading-tight tracking-tight"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            Tools & <motion.span 
+              className="text-transparent bg-clip-text bg-gradient-to-r from-highlight via-accent to-highlight"
+              animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+              transition={{ duration: 5, repeat: Infinity }}
+              style={{ backgroundSize: '200% 200%' }}
+            >
+              Platforms
+            </motion.span>
+          </motion.h2>
+          
+          <motion.p 
+            className="font-paragraph text-foreground/70 text-base md:text-lg max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            Seamlessly integrated with industry-leading automation and AI platforms. Our ecosystem powers intelligent workflows that scale your business exponentially.
+          </motion.p>
         </motion.div>
 
         {/* Main Container - Responsive Layouts */}
-        <div className="flex items-center justify-center min-h-[300px] sm:min-h-[350px] md:min-h-[450px] lg:min-h-[550px]">
+        <div className="flex items-center justify-center min-h-[320px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[600px]">
           <div
             ref={containerRef}
-            className="relative w-full max-w-[280px] sm:max-w-[350px] md:max-w-[500px] lg:max-w-[650px] aspect-square"
+            className="relative w-full max-w-[320px] sm:max-w-[400px] md:max-w-[550px] lg:max-w-[700px] aspect-square"
           >
-            {/* Mobile: Scrolling Horizontal Stack */}
+            {/* Mobile: Enhanced Carousel */}
             {screenSize === 'mobile' && (
               <div className="w-full h-full flex items-center justify-center">
-                <div className="relative w-full h-full">
-                  {/* Horizontal scrolling animation */}
+                <div className="relative w-full h-full overflow-hidden">
                   <motion.div
-                    className="flex gap-4 absolute left-0 top-1/2 -translate-y-1/2 w-max"
-                    animate={{ x: [0, -1000, 0] }}
-                    transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                    className="flex gap-6 absolute left-0 top-1/2 -translate-y-1/2 w-max"
+                    animate={{ x: [0, -1200, 0] }}
+                    transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                   >
-                    {[...tools, ...tools].map((tool, index) => (
+                    {[...tools, ...tools, ...tools].map((tool, index) => (
                       <motion.div
                         key={`${tool.id}-${index}`}
-                        className="flex-shrink-0 w-20 h-20 flex items-center justify-center"
-                        whileHover={{ scale: 1.1 }}
+                        className="flex-shrink-0 w-24 h-24 flex flex-col items-center justify-center"
+                        whileHover={{ scale: 1.15, y: -8 }}
+                        transition={{ duration: 0.3 }}
                       >
                         <motion.div
-                          className="relative w-16 h-16 rounded-lg bg-gradient-to-br from-background/80 to-background/60 backdrop-blur-md border flex items-center justify-center overflow-hidden"
+                          className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-background/90 to-background/70 backdrop-blur-lg border-2 flex items-center justify-center overflow-hidden shadow-lg"
                           style={{ borderColor: tool.color }}
                           animate={{
-                            boxShadow: `0 0 12px ${tool.color}20`,
+                            boxShadow: `0 0 20px ${tool.color}30, inset 0 0 15px ${tool.color}10`,
                           }}
                           whileHover={{
-                            scale: 1.15,
-                            boxShadow: `0 0 24px ${tool.color}50, inset 0 0 10px ${tool.color}15`,
+                            scale: 1.1,
+                            boxShadow: `0 0 40px ${tool.color}60, inset 0 0 20px ${tool.color}20`,
                           }}
                           transition={{ duration: 0.3 }}
                         >
                           <motion.div
                             animate={{ rotate: [0, 360] }}
-                            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                            className="relative z-10"
+                          >
+                            <tool.icon
+                              className="w-8 h-8"
+                              style={{ color: tool.color }}
+                            />
+                          </motion.div>
+                          <motion.div
+                            className="absolute inset-0 rounded-2xl"
+                            style={{ borderColor: tool.color }}
+                            animate={{
+                              boxShadow: `inset 0 0 20px ${tool.color}20`,
+                            }}
+                          />
+                        </motion.div>
+                        <motion.p 
+                          className="text-xs font-mono text-foreground/60 text-center mt-3 whitespace-nowrap"
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                        >
+                          {tool.name}
+                        </motion.p>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+              </div>
+            )}
+
+            {/* Tablet: Dynamic Grid */}
+            {screenSize === 'tablet' && (
+              <div className="w-full h-full flex items-center justify-center">
+                <motion.div
+                  className="grid grid-cols-3 gap-8 w-full h-full place-items-center"
+                  style={{ perspective: 1200 }}
+                >
+                  {tools.map((tool, index) => (
+                    <motion.div
+                      key={tool.id}
+                      className="float-item"
+                      style={{ animationDelay: `${index * 0.12}s` }}
+                      onMouseEnter={() => setHoveredId(tool.id)}
+                      onMouseLeave={() => setHoveredId(null)}
+                    >
+                      <motion.div
+                        className="relative flex flex-col items-center"
+                        animate={{
+                          scale: hoveredId === tool.id ? 1.15 : 1,
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <motion.div
+                          className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-background/85 to-background/65 backdrop-blur-lg border-2 flex items-center justify-center overflow-hidden cursor-pointer shadow-lg"
+                          style={{ borderColor: tool.color }}
+                          animate={{
+                            boxShadow: hoveredId === tool.id
+                              ? `0 0 35px ${tool.color}60, inset 0 0 15px ${tool.color}20`
+                              : `0 0 15px ${tool.color}25`,
+                          }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <motion.div
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                             className="relative z-10"
                           >
                             <tool.icon
@@ -165,55 +286,18 @@ export default function ToolsOrbit() {
                             />
                           </motion.div>
                         </motion.div>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                </div>
-              </div>
-            )}
-
-            {/* Tablet: Rotating Grid */}
-            {screenSize === 'tablet' && (
-              <div className="w-full h-full flex items-center justify-center">
-                <motion.div
-                  className="orbit-container-reverse grid grid-cols-3 gap-6 w-full h-full place-items-center"
-                  style={{ perspective: 1000 }}
-                >
-                  {tools.map((tool, index) => (
-                    <motion.div
-                      key={tool.id}
-                      className="float-item"
-                      style={{ animationDelay: `${index * 0.15}s` }}
-                      onMouseEnter={() => setHoveredId(tool.id)}
-                      onMouseLeave={() => setHoveredId(null)}
-                    >
-                      <motion.div
-                        className="relative w-14 h-14 rounded-lg bg-gradient-to-br from-background/80 to-background/60 backdrop-blur-md border flex items-center justify-center overflow-hidden cursor-pointer"
-                        style={{ borderColor: tool.color }}
-                        animate={{
-                          scale: hoveredId === tool.id ? 1.2 : 1,
-                          boxShadow: hoveredId === tool.id
-                            ? `0 0 24px ${tool.color}50, inset 0 0 10px ${tool.color}15`
-                            : `0 0 12px ${tool.color}20`,
-                        }}
-                        transition={{ duration: 0.3 }}
-                      >
                         <motion.div
-                          animate={{ rotate: [0, 360] }}
-                          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                          className="relative z-10"
+                          className="mt-3 text-xs font-mono text-foreground/70 text-center"
+                          animate={{ opacity: hoveredId === tool.id ? 1 : 0.6 }}
                         >
-                          <tool.icon
-                            className="w-6 h-6"
-                            style={{ color: tool.color }}
-                          />
+                          {tool.name}
                         </motion.div>
-                      </motion.div>
-                      <motion.div
-                        className="mt-2 text-xs font-mono text-foreground/60 text-center whitespace-nowrap"
-                        animate={{ opacity: hoveredId === tool.id ? 1 : 0.5 }}
-                      >
-                        {tool.name}
+                        <motion.p
+                          className="text-[10px] text-foreground/40 text-center mt-1 max-w-[80px]"
+                          animate={{ opacity: hoveredId === tool.id ? 1 : 0 }}
+                        >
+                          {tool.description}
+                        </motion.p>
                       </motion.div>
                     </motion.div>
                   ))}
@@ -221,79 +305,86 @@ export default function ToolsOrbit() {
               </div>
             )}
 
-            {/* Desktop: Orbital Animation */}
+            {/* Desktop: Premium Orbital Animation */}
             {screenSize === 'desktop' && (
               <>
-                {/* Animated Orbital Rings */}
-                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 600 600">
-                  {/* Outer rotating ring */}
+                {/* Animated Orbital Rings with Enhanced Visuals */}
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 700 700">
+                  {/* Outer ring - fast rotation */}
                   <motion.circle
-                    cx="300"
-                    cy="300"
-                    r="200"
+                    cx="350"
+                    cy="350"
+                    r="240"
                     fill="none"
-                    stroke="rgba(50, 224, 196, 0.08)"
+                    stroke="rgba(50, 224, 196, 0.12)"
+                    strokeWidth="2"
+                    animate={{ strokeDashoffset: [0, -60] }}
+                    transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+                    strokeDasharray="15,8"
+                  />
+                  
+                  {/* Middle ring - medium rotation */}
+                  <motion.circle
+                    cx="350"
+                    cy="350"
+                    r="170"
+                    fill="none"
+                    stroke="rgba(28, 130, 227, 0.08)"
                     strokeWidth="1.5"
-                    animate={{ strokeDashoffset: [0, -50] }}
-                    transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-                    strokeDasharray="10,5"
-                  />
-                  {/* Middle rotating ring */}
-                  <motion.circle
-                    cx="300"
-                    cy="300"
-                    r="140"
-                    fill="none"
-                    stroke="rgba(28, 130, 227, 0.06)"
-                    strokeWidth="1"
                     animate={{ strokeDashoffset: [0, 50] }}
-                    transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
+                    transition={{ duration: 55, repeat: Infinity, ease: 'linear' }}
+                    strokeDasharray="12,6"
+                  />
+                  
+                  {/* Inner ring - slow rotation */}
+                  <motion.circle
+                    cx="350"
+                    cy="350"
+                    r="100"
+                    fill="none"
+                    stroke="rgba(50, 224, 196, 0.06)"
+                    strokeWidth="1"
+                    animate={{ strokeDashoffset: [0, -40] }}
+                    transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
                     strokeDasharray="10,5"
                   />
-                  {/* Inner rotating ring */}
-                  <motion.circle
-                    cx="300"
-                    cy="300"
-                    r="80"
-                    fill="none"
-                    stroke="rgba(50, 224, 196, 0.04)"
-                    strokeWidth="1"
-                    animate={{ strokeDashoffset: [0, -30] }}
-                    transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
-                    strokeDasharray="8,4"
-                  />
+                  
+                  {/* Decorative cross lines */}
+                  <line x1="350" y1="110" x2="350" y2="590" stroke="rgba(50, 224, 196, 0.04)" strokeWidth="1" />
+                  <line x1="110" y1="350" x2="590" y2="350" stroke="rgba(50, 224, 196, 0.04)" strokeWidth="1" />
                 </svg>
 
-                {/* Central Pulsing Core */}
+                {/* Central Pulsing Core - Enhanced */}
                 <motion.div
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
                   animate={{
-                    scale: [1, 1.08, 1],
+                    scale: [1, 1.12, 1],
                   }}
-                  transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
                 >
-                  <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-highlight/40 to-accent/40 flex items-center justify-center border border-highlight/40 shadow-lg"
+                  <motion.div 
+                    className="relative w-24 h-24 rounded-full bg-gradient-to-br from-highlight/50 to-accent/40 flex items-center justify-center border-2 border-highlight/60 shadow-2xl pulse-ring"
                     style={{
-                      boxShadow: '0 0 30px rgba(50, 224, 196, 0.3), inset 0 0 20px rgba(50, 224, 196, 0.1)'
+                      boxShadow: '0 0 40px rgba(50, 224, 196, 0.4), inset 0 0 30px rgba(50, 224, 196, 0.15)',
                     }}
                   >
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                     >
-                      <Sparkles className="w-8 h-8 text-highlight/70" />
+                      <Sparkles className="w-10 h-10 text-highlight" />
                     </motion.div>
-                  </div>
+                  </motion.div>
                 </motion.div>
 
-                {/* Orbiting Icons - Continuous Rotation */}
+                {/* Orbiting Icons - Premium Animation */}
                 <motion.div
                   className="orbit-container absolute inset-0 w-full h-full"
                   style={{ transformOrigin: 'center' }}
                 >
                   {tools.map((tool, index) => {
                     const angle = (360 / tools.length) * index * (Math.PI / 180);
-                    const radius = 170;
+                    const radius = 210;
                     const x = Math.cos(angle) * radius;
                     const y = Math.sin(angle) * radius;
 
@@ -308,55 +399,72 @@ export default function ToolsOrbit() {
                         onMouseEnter={() => setHoveredId(tool.id)}
                         onMouseLeave={() => setHoveredId(null)}
                       >
-                        {/* Connection Line */}
+                        {/* Animated Connection Line */}
                         <motion.div
-                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[170px] h-[1px] origin-left"
+                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[2px] origin-left"
                           style={{
-                            background: `linear-gradient(90deg, ${tool.color}30, transparent)`,
+                            width: radius,
+                            background: `linear-gradient(90deg, ${tool.color}50, ${tool.color}10, transparent)`,
                             transform: `rotate(${angle * (180 / Math.PI)}deg) translateX(0)`,
                           }}
+                          animate={{
+                            opacity: [0.3, 0.6, 0.3],
+                          }}
+                          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                         />
 
-                        {/* Icon Container */}
+                        {/* Premium Icon Container */}
                         <motion.div
-                          className="relative w-16 h-16 rounded-lg bg-gradient-to-br from-background/85 to-background/65 backdrop-blur-md border flex items-center justify-center overflow-hidden cursor-pointer"
+                          className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-background/90 to-background/70 backdrop-blur-xl border-2 flex items-center justify-center overflow-hidden cursor-pointer shadow-2xl"
                           style={{
                             borderColor: tool.color,
                           }}
                           animate={{
-                            scale: hoveredId === tool.id ? 1.3 : 1,
-                            borderColor: hoveredId === tool.id ? tool.color : `${tool.color}50`,
+                            scale: hoveredId === tool.id ? 1.4 : 1,
+                            borderColor: hoveredId === tool.id ? tool.color : `${tool.color}60`,
                             boxShadow: hoveredId === tool.id
-                              ? `0 0 30px ${tool.color}60, inset 0 0 15px ${tool.color}20`
-                              : `0 0 15px ${tool.color}25`,
+                              ? `0 0 50px ${tool.color}70, inset 0 0 25px ${tool.color}25, 0 20px 40px rgba(0,0,0,0.3)`
+                              : `0 0 20px ${tool.color}30, inset 0 0 10px ${tool.color}10`,
                           }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ duration: 0.35, ease: 'easeOut' }}
                         >
+                          {/* Background gradient animation */}
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-transparent opacity-0 group-hover:opacity-100"
+                            animate={{
+                              background: hoveredId === tool.id 
+                                ? `linear-gradient(135deg, ${tool.color}20, transparent)`
+                                : 'linear-gradient(135deg, transparent, transparent)',
+                            }}
+                            transition={{ duration: 0.3 }}
+                          />
+                          
                           <motion.div
                             animate={{ rotate: [0, 360] }}
-                            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                             className="relative z-10"
                           >
                             <tool.icon
-                              className="w-7 h-7 transition-colors duration-300"
+                              className="w-9 h-9 transition-colors duration-300"
                               style={{ color: tool.color }}
                             />
                           </motion.div>
                         </motion.div>
 
-                        {/* Tooltip */}
+                        {/* Enhanced Tooltip */}
                         <motion.div
-                          className="absolute top-full mt-4 left-1/2 -translate-x-1/2 whitespace-nowrap"
+                          className="absolute top-full mt-6 left-1/2 -translate-x-1/2 whitespace-nowrap"
                           animate={{
                             opacity: hoveredId === tool.id ? 1 : 0,
-                            y: hoveredId === tool.id ? 0 : -8,
+                            y: hoveredId === tool.id ? 0 : -12,
                             scale: hoveredId === tool.id ? 1 : 0.8,
                           }}
-                          transition={{ duration: 0.2 }}
+                          transition={{ duration: 0.25 }}
                           pointerEvents="none"
                         >
-                          <div className="px-3 py-1.5 bg-background/95 backdrop-blur-lg border border-foreground/20 rounded text-xs font-mono text-foreground/80 whitespace-nowrap shadow-lg">
-                            {tool.name}
+                          <div className="px-4 py-2.5 bg-background/98 backdrop-blur-xl border border-foreground/20 rounded-lg text-xs font-mono text-foreground/90 whitespace-nowrap shadow-2xl">
+                            <div className="font-semibold text-highlight mb-1">{tool.name}</div>
+                            <div className="text-foreground/60 text-[10px]">{tool.description}</div>
                           </div>
                         </motion.div>
                       </motion.div>
@@ -368,23 +476,28 @@ export default function ToolsOrbit() {
           </div>
         </div>
 
-        {/* Bottom CTA */}
+        {/* Enhanced Bottom Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center mt-8 md:mt-12"
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-center mt-12 md:mt-20"
         >
-          <p className="font-paragraph text-foreground/60 text-xs md:text-sm mb-3">
-            {screenSize === 'mobile' ? 'Continuously rotating ecosystem' : screenSize === 'tablet' ? 'Animated grid of integrations' : 'Hover over icons to explore integrations'}
-          </p>
+          <motion.p 
+            className="font-paragraph text-foreground/70 text-sm md:text-base mb-6 max-w-2xl mx-auto"
+            animate={{ opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 3, repeat: Infinity }}
+          >
+            {screenSize === 'mobile' ? '↻ Swipe through our integrated ecosystem' : screenSize === 'tablet' ? '✦ Explore our dynamic platform grid' : '✦ Hover over icons to discover integrations'}
+          </motion.p>
+          
           <motion.div
-            animate={{ y: [0, 6, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
             className="inline-block"
           >
-            <Rocket className="w-4 h-4 md:w-5 md:h-5 text-highlight/70" />
+            <Rocket className="w-5 h-5 md:w-6 md:h-6 text-highlight/80" />
           </motion.div>
         </motion.div>
       </div>
