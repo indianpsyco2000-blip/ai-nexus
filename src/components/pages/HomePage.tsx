@@ -62,6 +62,37 @@ export default function HomePage() {
     }
   };
 
+  // Desktop-only animation variants
+  const floatingVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8 }
+    },
+    float: {
+      y: [0, -20, 0],
+      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+    }
+  };
+
+  const rotatingVariants = {
+    rotate: {
+      rotate: 360,
+      transition: { duration: 20, repeat: Infinity, ease: "linear" }
+    }
+  };
+
+  const pulseGlowVariants = {
+    pulse: {
+      boxShadow: [
+        "0 0 0 0 rgba(50, 224, 196, 0.7)",
+        "0 0 0 20px rgba(50, 224, 196, 0)",
+      ],
+      transition: { duration: 2, repeat: Infinity }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-accent/30 selection:text-highlight overflow-clip font-paragraph">
       <Header />
@@ -149,6 +180,50 @@ export default function HomePage() {
           filter: blur(25px);
           pointer-events: none;
         }
+
+        /* Desktop-only floating animations */
+        @media (min-width: 1024px) {
+          @keyframes float-up-down {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+          }
+          
+          @keyframes float-left-right {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(20px); }
+          }
+          
+          @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          
+          @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(50, 224, 196, 0.7); }
+            50% { box-shadow: 0 0 0 20px rgba(50, 224, 196, 0); }
+          }
+          
+          @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+          }
+          
+          .desktop-float {
+            animation: float-up-down 4s ease-in-out infinite;
+          }
+          
+          .desktop-float-delayed {
+            animation: float-up-down 5s ease-in-out infinite 0.5s;
+          }
+          
+          .desktop-rotate {
+            animation: rotate-slow 20s linear infinite;
+          }
+          
+          .desktop-pulse {
+            animation: pulse-glow 2s ease-in-out infinite;
+          }
+        }
       `}</style>
       {/* HERO SECTION */}
       <section className="relative w-full min-h-screen md:min-h-[100vh] flex items-center justify-center overflow-hidden pt-20 md:pt-32 bg-background">
@@ -164,7 +239,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mb-4 md:mb-6"
+            className="mb-4 md:mb-6 lg:desktop-float"
           >
             <span className="font-sans font-bold text-xs md:text-sm tracking-widest text-[#5ed29c] uppercase">AI - Automation services</span>
           </motion.div>
@@ -176,7 +251,7 @@ export default function HomePage() {
             className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold uppercase leading-tight tracking-tight mb-4 md:mb-6 text-foreground px-4"
           >
             Automate Your <br className="hidden sm:block" />Business<motion.span 
-              className="text-[#5ed29c] inline-block"
+              className="text-[#5ed29c] inline-block lg:desktop-float"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >.</motion.span>
@@ -186,7 +261,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="font-sans text-xs sm:text-sm md:text-base lg:text-lg text-foreground/70 max-w-[512px] mx-auto mb-8 md:mb-12 leading-relaxed px-4"
+            className="font-sans text-xs sm:text-sm md:text-base lg:text-lg text-foreground/70 max-w-[512px] mx-auto mb-8 md:mb-12 leading-relaxed px-4 lg:desktop-float-delayed"
           >From AI Agents to workflow automations- we build tools that scale your growth.</motion.p>
         </motion.div>
       </section>
@@ -233,7 +308,8 @@ export default function HomePage() {
                   <Link
                     key={idx}
                     to={navigateTo}
-                    className="group relative glass-panel p-6 md:p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-highlight/50 neon-glow cursor-pointer overflow-hidden no-underline block"
+                    className="group relative glass-panel p-6 md:p-8 clip-diagonal transition-all duration-500 hover:bg-white/[0.02] hover:border-highlight/50 neon-glow cursor-pointer overflow-hidden no-underline block lg:desktop-float"
+                    style={{ animationDelay: `${idx * 0.1}s` }}
                   >
                     <motion.div
                       initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -262,7 +338,7 @@ export default function HomePage() {
                       
                       {/* Icon container with enhanced animation */}
                       <motion.div 
-                        className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-all duration-500 neon-glow relative overflow-hidden"
+                        className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-all duration-500 neon-glow relative overflow-hidden lg:desktop-rotate"
                         whileHover={{ rotate: 360 }}
                         transition={{ duration: 0.8 }}
                       >
@@ -300,7 +376,7 @@ export default function HomePage() {
 
                       {/* Pulse effect on hover */}
                       <motion.div
-                        className="absolute inset-0 border border-highlight/50 rounded-[12px] pointer-events-none"
+                        className="absolute inset-0 border border-highlight/50 rounded-[12px] pointer-events-none lg:desktop-pulse"
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileHover={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.3 }}
@@ -356,7 +432,8 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="group relative h-[350px] md:h-[450px] glass-panel overflow-hidden clip-diagonal"
+                  className="group relative h-[350px] md:h-[450px] glass-panel overflow-hidden clip-diagonal lg:desktop-float"
+                  style={{ animationDelay: `${idx * 0.15}s` }}
                 >
                   {service.serviceImage && (
                     <div className="absolute inset-0 z-0">
@@ -429,7 +506,8 @@ export default function HomePage() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className="group flex flex-col md:flex-row gap-6 md:gap-8 glass-panel p-6 md:p-8 clip-diagonal hover:bg-white/[0.02] transition-colors"
+                    className="group flex flex-col md:flex-row gap-6 md:gap-8 glass-panel p-6 md:p-8 clip-diagonal hover:bg-white/[0.02] transition-colors lg:desktop-float-delayed"
+                    style={{ animationDelay: `${idx * 0.2}s` }}
                   >
                     {industry.industryImage && (
                       <div className="w-full md:w-1/3 h-48 md:h-auto relative overflow-hidden rounded-sm">
@@ -483,7 +561,8 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.8, delay: idx * 0.2 }}
-                className="group relative glass-panel p-6 md:p-8 flex flex-col h-full border-t-4 border-t-transparent hover:border-t-highlight transition-all duration-300"
+                className="group relative glass-panel p-6 md:p-8 flex flex-col h-full border-t-4 border-t-transparent hover:border-t-highlight transition-all duration-300 lg:desktop-float"
+                style={{ animationDelay: `${idx * 0.25}s` }}
               >
                 <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
                   <Terminal className="w-6 h-6 text-highlight" />
@@ -537,17 +616,17 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-highlight/10" />
           
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-accent/20 rounded-full blur-[100px] -z-10"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-accent/20 rounded-full blur-[100px] -z-10 lg:desktop-float"
             animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          <h2 className="font-heading text-3xl md:text-5xl lg:text-7xl font-bold uppercase mb-6 tracking-tighter">
+          <h2 className="font-heading text-3xl md:text-5xl lg:text-7xl font-bold uppercase mb-6 tracking-tighter lg:desktop-float-delayed">
             Initiate Your <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-highlight to-accent glow-text">Transformation</span>
           </h2>
           
-          <p className="text-base md:text-lg lg:text-xl text-foreground/80 max-w-2xl mx-auto mb-8 md:mb-12 font-light">
+          <p className="text-base md:text-lg lg:text-xl text-foreground/80 max-w-2xl mx-auto mb-8 md:mb-12 font-light lg:desktop-float">
             Deploy intelligent systems today. Scale exponentially tomorrow. The future of your operations begins here.
           </p>
           
