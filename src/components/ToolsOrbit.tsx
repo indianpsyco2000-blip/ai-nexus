@@ -247,7 +247,7 @@ export default function ToolsOrbit() {
             {screenSize === 'tablet' && (
               <div className="w-full h-full flex items-center justify-center">
                 <motion.div
-                  className="grid grid-cols-3 gap-8 w-full h-full place-items-center"
+                  className="grid grid-cols-3 gap-4 w-full h-full place-items-center"
                   style={{ perspective: 1200 }}
                 >
                   {tools.map((tool, index) => (
@@ -309,7 +309,7 @@ export default function ToolsOrbit() {
             {screenSize === 'desktop' && (
               <div className="w-full h-full flex items-center justify-center">
                 <motion.div
-                  className="grid grid-cols-4 gap-8 w-full h-full place-items-center"
+                  className="grid grid-cols-4 gap-4 w-full h-full place-items-center"
                   style={{ perspective: 1200 }}
                 >
                   {tools.map((tool, index) => (
@@ -377,14 +377,6 @@ export default function ToolsOrbit() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-center mt-8 md:mt-12"
         >
-          <motion.p 
-            className="font-paragraph text-foreground/70 text-sm md:text-base mb-6 max-w-2xl mx-auto"
-            animate={{ opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
-            {screenSize === 'mobile' ? '↻ Swipe through our integrated ecosystem' : screenSize === 'tablet' ? '✦ Explore our dynamic platform grid' : '✦ Hover over icons to discover integrations'}
-          </motion.p>
-          
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
