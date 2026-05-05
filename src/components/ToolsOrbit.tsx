@@ -40,7 +40,7 @@ export default function ToolsOrbit() {
   }, []);
 
   return (
-    <section className="relative w-full py-20 md:py-40 px-4 md:px-6 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
+    <section className="relative w-full py-12 md:py-24 px-4 md:px-6 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
       <style>{`
         @keyframes orbit-rotate {
           0% { transform: rotate(0deg); }
@@ -128,7 +128,7 @@ export default function ToolsOrbit() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16 md:mb-24"
+          className="text-center mb-12 md:mb-16"
         >
           <motion.div 
             className="flex items-center justify-center gap-4 md:gap-6 mb-6"
@@ -178,10 +178,10 @@ export default function ToolsOrbit() {
         </motion.div>
 
         {/* Main Container - Responsive Layouts */}
-        <div className="flex items-center justify-center min-h-[320px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[650px]">
+        <div className="flex items-center justify-center min-h-[280px] sm:min-h-[320px] md:min-h-[380px] lg:min-h-[500px]">
           <div
             ref={containerRef}
-            className="relative w-full max-w-[320px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[700px] aspect-square"
+            className="relative w-full max-w-[280px] sm:max-w-[340px] md:max-w-[420px] lg:max-w-[580px] aspect-square"
           >
             {/* Mobile: Enhanced Carousel */}
             {screenSize === 'mobile' && (
@@ -375,7 +375,7 @@ export default function ToolsOrbit() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-center mt-12 md:mt-20"
+          className="text-center mt-8 md:mt-12"
         >
           <motion.p 
             className="font-paragraph text-foreground/70 text-sm md:text-base mb-6 max-w-2xl mx-auto"

@@ -268,7 +268,7 @@ export default function HomePage() {
       {/* TOOLS ORBIT SECTION */}
       <ToolsOrbit />
       {/* WHAT WE DO - Static Architecture */}
-      <section className="relative w-full py-16 md:py-32 px-4 md:px-6 border-t border-white/5">
+      <section className="relative w-full py-12 md:py-20 px-4 md:px-6 border-t border-white/5">
         <div className="max-w-[120rem] mx-auto">
           <motion.div
             initial="hidden"
