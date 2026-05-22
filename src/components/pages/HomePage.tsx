@@ -101,7 +101,7 @@ export default function HomePage() {
 
         .tech-grid {
           background-size: 50px 50px;
-          background-image: 
+          background-image:
             linear-gradient(to right, rgba(50, 224, 196, 0.08) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(50, 224, 196, 0.08) 1px, transparent 1px);
           mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
@@ -128,7 +128,7 @@ export default function HomePage() {
         .neon-glow:hover {
           box-shadow: 0 0 40px rgba(50, 224, 196, 0.8), inset 0 0 20px rgba(50, 224, 196, 0.2);
         }
-        
+
         /* Liquid Glass Card Styles */
         .liquid-glass-card {
           background: rgba(255, 255, 255, 0.01);
@@ -139,7 +139,7 @@ export default function HomePage() {
           border-radius: 12px;
           position: relative;
         }
-        
+
         .liquid-glass-card::before {
           content: '';
           position: absolute;
@@ -187,39 +187,39 @@ export default function HomePage() {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-30px); }
           }
-          
+
           @keyframes float-left-right {
             0%, 100% { transform: translateX(0px); }
             50% { transform: translateX(20px); }
           }
-          
+
           @keyframes rotate-slow {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
           }
-          
+
           @keyframes pulse-glow {
             0%, 100% { box-shadow: 0 0 0 0 rgba(50, 224, 196, 0.7); }
             50% { box-shadow: 0 0 0 20px rgba(50, 224, 196, 0); }
           }
-          
+
           @keyframes shimmer {
             0% { background-position: -1000px 0; }
             100% { background-position: 1000px 0; }
           }
-          
+
           .desktop-float {
             animation: float-up-down 4s ease-in-out infinite;
           }
-          
+
           .desktop-float-delayed {
             animation: float-up-down 5s ease-in-out infinite 0.5s;
           }
-          
+
           .desktop-rotate {
             animation: rotate-slow 20s linear infinite;
           }
-          
+
           .desktop-pulse {
             animation: pulse-glow 2s ease-in-out infinite;
           }
@@ -230,7 +230,7 @@ export default function HomePage() {
         {/* Animated Background Component */}
         <AnimatedHeroBackground />
 
-        <motion.div 
+        <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="relative z-10 w-full max-w-[120rem] mx-auto px-4 sm:px-6 flex flex-col items-center text-center"
         >
@@ -250,7 +250,7 @@ export default function HomePage() {
             transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold uppercase leading-tight tracking-tight mb-4 md:mb-6 text-foreground px-4"
           >
-            Automate Your <br className="hidden sm:block" />Business<motion.span 
+            Automate Your <br className="hidden sm:block" />Business<motion.span
               className="text-[#5ed29c] inline-block lg:desktop-float"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -297,13 +297,13 @@ export default function HomePage() {
                 { icon: Database, title: 'Custom Architecture', desc: 'Bespoke software solutions engineered from the ground up for your specific data models.', delay: 0.2, keyword: 'Custom' },
                 { icon: Zap, title: 'Performance Optimization', desc: 'Algorithmic refinement of existing processes to maximize throughput and minimize latency.', delay: 0.3, keyword: 'Performance' }
               ].map((item, idx) => {
-                const matchingService = services.find(s => 
+                const matchingService = services.find(s =>
                   s.serviceName?.toLowerCase().includes(item.keyword.toLowerCase()) ||
                   s.category?.toLowerCase().includes(item.keyword.toLowerCase())
                 );
-                
+
                 const navigateTo = matchingService ? `/service/${matchingService._id}` : '/services';
-                
+
                 return (
                   <Link
                     key={idx}
@@ -316,28 +316,28 @@ export default function HomePage() {
                       whileInView={{ opacity: 1, y: 0, scale: 1 }}
                       whileHover={{ y: -8, scale: 1.02 }}
                       viewport={{ once: true, margin: "-50px" }}
-                      transition={{ 
-                        duration: 0.6, 
+                      transition={{
+                        duration: 0.6,
                         delay: item.delay,
                         ease: [0.16, 1, 0.3, 1]
                       }}
                       className="w-full"
                     >
                       {/* Animated background glow on hover */}
-                      <motion.div 
+                      <motion.div
                         className="absolute inset-0 bg-gradient-to-br from-highlight/20 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
                         initial={{ scale: 0 }}
                         whileHover={{ scale: 1 }}
                         transition={{ duration: 0.5 }}
                       />
-                      
+
                       {/* Top border animation */}
-                      <motion.div 
-                        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-highlight to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" 
+                      <motion.div
+                        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-highlight to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700"
                       />
-                      
+
                       {/* Icon container with enhanced animation */}
-                      <motion.div 
+                      <motion.div
                         className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-highlight/10 flex items-center justify-center mb-6 border border-highlight/30 group-hover:border-highlight/70 group-hover:bg-highlight/20 transition-all duration-500 neon-glow relative overflow-hidden lg:desktop-rotate"
                         whileHover={{ rotate: 360 }}
                         transition={{ duration: 0.8 }}
@@ -355,12 +355,12 @@ export default function HomePage() {
                           <item.icon className="w-6 h-6 md:w-7 md:h-7 text-highlight group-hover:text-highlight transition-colors duration-500 relative z-10" />
                         </motion.div>
                       </motion.div>
-                      
+
                       <h3 className="font-heading text-lg md:text-xl font-bold uppercase mb-3 tracking-wide group-hover:text-highlight transition-colors duration-300">{item.title}</h3>
                       <p className="text-foreground/60 text-xs md:text-sm leading-relaxed font-light group-hover:text-foreground/80 transition-colors duration-300">{item.desc}</p>
-                      
+
                       {/* Animated CTA */}
-                      <motion.div 
+                      <motion.div
                         className="mt-6 flex items-center gap-2 text-xs font-mono text-highlight opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         initial={{ x: -10 }}
                         whileHover={{ x: 0 }}
@@ -380,7 +380,7 @@ export default function HomePage() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileHover={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.3 }}
-                        animate={{ 
+                        animate={{
                           boxShadow: [
                             "0 0 0 0 rgba(50, 224, 196, 0)",
                             "0 0 0 8px rgba(50, 224, 196, 0.1)",
@@ -446,14 +446,14 @@ export default function HomePage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
                     </div>
                   )}
-                  
+
                   <div className="relative z-10 h-full p-6 md:p-8 flex flex-col justify-end">
                     {service.category && (
                       <span className="absolute top-6 md:top-8 left-6 md:left-8 px-3 py-1 bg-accent/20 border border-accent/30 text-accent text-xs font-mono uppercase tracking-widest backdrop-blur-md">
                         {service.category}
                       </span>
                     )}
-                    
+
                     <div className="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
                       <h3 className="font-heading text-xl md:text-2xl font-bold uppercase mb-4 leading-tight">{service.serviceName}</h3>
                       <p className="text-foreground/70 text-xs md:text-sm line-clamp-2 mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
@@ -474,7 +474,7 @@ export default function HomePage() {
       <section className="relative w-full py-16 md:py-32 px-4 md:px-6">
         <div className="max-w-[120rem] mx-auto">
           <div className="flex flex-col lg:flex-row gap-8 md:gap-16">
-            
+
             {/* Sticky Left Column */}
             <div className="w-full lg:w-1/3">
               <div className="sticky top-32">
@@ -567,15 +567,15 @@ export default function HomePage() {
                 <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
                   <Terminal className="w-6 h-6 text-highlight" />
                 </div>
-                
+
                 {study.industry && (
                   <span className="text-xs font-mono text-accent uppercase tracking-widest mb-4 block">
                     Sector: {study.industry}
                   </span>
                 )}
-                
+
                 <h3 className="font-heading text-lg md:text-2xl font-bold uppercase mb-6 leading-tight">{study.title}</h3>
-                
+
                 <div className="space-y-4 mb-8 flex-grow">
                   <div>
                     <span className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest block mb-1">Problem Statement</span>
@@ -605,7 +605,7 @@ export default function HomePage() {
       {/* CTA BANNER - Immersive Glow */}
       <section className="relative w-full py-20 md:py-40 px-4 md:px-6 overflow-hidden">
         <div className="absolute inset-0 tech-grid opacity-50 z-0" />
-        
+
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -614,7 +614,7 @@ export default function HomePage() {
           className="relative z-10 max-w-[80rem] mx-auto glass-panel border-accent/30 p-8 md:p-12 lg:p-24 text-center clip-diagonal overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-highlight/10" />
-          
+
           <motion.div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-accent/20 rounded-full blur-[100px] -z-10 lg:desktop-float"
             animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
@@ -625,11 +625,11 @@ export default function HomePage() {
             Initiate Your <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-highlight to-accent glow-text">Transformation</span>
           </h2>
-          
+
           <p className="text-base md:text-lg lg:text-xl text-foreground/80 max-w-2xl mx-auto mb-8 md:mb-12 font-light lg:desktop-float">
             Deploy intelligent systems today. Scale exponentially tomorrow. The future of your operations begins here.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
             <Link
               to="/contact"
